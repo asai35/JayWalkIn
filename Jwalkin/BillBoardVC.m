@@ -2,7 +2,7 @@
 //  BillBoardVC.m
 //  Jwalkin
 //
-//  Created by Chanchal Warde on 5/18/15.
+//  Created by Asai on 5/18/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -19,11 +19,6 @@
 #import <Social/Social.h>
 #import "KGModal.h"
 #import "SocialShareUIView.h"
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import <FBSDKShareKit/FBSDKShareKit.h>
-#import <TwitterKit/TwitterKit.h>
-#import <Twitter/Twitter.h>
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) // iPhone and       iPod touch style UI
 
@@ -59,8 +54,9 @@
     SocialShareUIView *socialShareModalView;
     //BOOL shareFB,shareTW, sharePT;
 }
-@end
+@property     PDKUser *user;
 
+@end
 @implementation BillBoardVC
 @synthesize billBoardNo;
 
@@ -180,7 +176,7 @@
     
     
     //scrollViewVideo.contentSize =CGSizeMake(self.view.frame.size.width, btnSubmitVideo.frame.origin.y+btnSubmitVideo.frame.size.height+20);//Dp
-    scrollViewImage.contentSize =CGSizeMake(self.view.frame.size.width, btnSubmitImage.frame.origin.y+btnSubmitImage.frame.size.height+20);//Dp
+    scrollViewImage.contentSize =CGSizeMake(self.view.frame.size.width, btnSubmitImage.frame.origin.y + btnSubmitImage.frame.size.height + 20+ 64);//Dp
     //cp
     arrSubCatTownInfo=[[NSMutableArray alloc]initWithObjects:@"Contest",@"Happy Hour",@"Breakfast Specials",@"Lunch Specials",@"Dinner Specials",@"Kids Activites",@"Events",@"Local Sales",@"School News",@"Town News",@"Holiday", nil];
     app = (AppDelegate*)[UIApplication sharedApplication].delegate;
@@ -231,7 +227,7 @@
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
     if (networkStatus == NotReachable)
     {
-        [self showAlert:@"Jaywalk.In" message:@"Please check your internet connection." cancel:@"OK" other:nil];
+        [self showAlert:@"Empower Main Street" message:@"Please check your internet connection." cancel:@"OK" other:nil];
     }
     else
     {
@@ -313,51 +309,6 @@
                     }
                 }
             }];
-//            NSURL *codeURL = [NSURL URLWithString:mainUrl];
-//            AFHTTPClient *client= [AFHTTPClient clientWithBaseURL:codeURL];
-//            NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST" path:@"addbill_board.php"  parameters:parameters constructingBodyWithBlock: ^(id <AFMultipartFormData>formData)
-//                                            {
-//                                                //cp
-//                                                if (imageData != nil)
-//                                                {
-//                                                    [formData appendPartWithFileData:imageData name:@"image_name" fileName:imageName mimeType:@"image/png"];
-//                                                }
-//                                                if (arrData.count !=0 )
-//                                                {
-//                                                    for (int i = 0; i <arrData.count; i++)
-//                                                    {
-//                                                        [formData appendPartWithFileData:[arrData objectAtIndex:i] name:[arrFileName objectAtIndex:i] fileName:@"Photo.mp4" mimeType:[arrFileType objectAtIndex:i]];
-//                                                    }
-//                                                }
-//                                            }];
-//            AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//            [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-//             {
-//                 NSString *response = [operation responseString];
-//                 NSError *error;
-//                 if (response!=nil)
-//                 {
-//                     NSDictionary *responseDict = [NSJSONSerialization
-//                                                   JSONObjectWithData:[operation responseData] options:kNilOptions error:&error];
-//                     [app hideHUD];
-//                     if ([[responseDict valueForKey:@"status"] intValue]== 1)
-//                     {
-//                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfull" message:@"Discount billboard created successfully." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alert show];
-//                     }
-//                     else
-//                     {
-//                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alrt show];
-//                     }
-//                 }
-//             }
-//                                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//             {
-//             }];
-//            
-//            [operation start];
-           
         }
     }
 }
@@ -450,51 +401,6 @@
                     }
                 }
             }];
-            //cp
-//            NSURL *codeURL = [NSURL URLWithString:mainUrl];
-//            AFHTTPClient *client= [AFHTTPClient clientWithBaseURL:codeURL];
-//            NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST" path:@"addbill_board.php"  parameters:parameters constructingBodyWithBlock: ^(id <AFMultipartFormData>formData)
-//                                            {
-//                                                //cp
-//                                                if (imageData != nil)
-//                                                {
-//                                                    [formData appendPartWithFileData:imageData name:@"image_name" fileName:imageName mimeType:@"image/png"];
-//                                                }
-//                                                if (arrData.count !=0 )
-//                                                {
-//                                                    for (int i = 0; i <arrData.count; i++)
-//                                                    {
-//                                                        [formData appendPartWithFileData:[arrData objectAtIndex:i] name:[arrFileName objectAtIndex:i] fileName:@"Photo.mp4" mimeType:[arrFileType objectAtIndex:i]];
-//                                                    }
-//                                                }
-//                                                //cp
-//                                            }];
-//            AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//            [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-//             {
-//                 NSString *response = [operation responseString];
-//                 NSError *error;
-//                 if (response!=nil)
-//                 {
-//                     NSDictionary *responseDict = [NSJSONSerialization
-//                                                   JSONObjectWithData:[operation responseData] options:kNilOptions error:&error];
-//                     [app hideHUD];
-//                     if ([[responseDict valueForKey:@"status"] intValue]== 1)
-//                     {
-//                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfull" message:@"Promo billboard created successfully." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alert show];
-//                     }
-//                     else
-//                     {
-//                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alrt show];
-//                     }
-//                 }
-//             }
-//                                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//             {
-//             }];
-//            [operation start];
         }
     }
 }
@@ -544,7 +450,6 @@
                               @"exp_date":btnEventExpDate.titleLabel.text
                               };
             }
-            [app showHUD];
             //cp
             //image
             NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory,NSUserDomainMask, YES) lastObject];
@@ -597,51 +502,6 @@
                     }
                 }
             }];
-           //cp
-//            NSURL *codeURL = [NSURL URLWithString:mainUrl];
-//            AFHTTPClient *client= [AFHTTPClient clientWithBaseURL:codeURL];
-//            NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST" path:@"addbill_board.php"  parameters:parameters constructingBodyWithBlock: ^(id <AFMultipartFormData>formData)
-//                                            {
-//                                                //cp
-//                                                if (imageData != nil)
-//                                                {
-//                                                    [formData appendPartWithFileData:imageData name:@"image_name" fileName:imageName mimeType:@"image/png"];
-//                                                }
-//                                                if (arrData.count !=0 )
-//                                                {
-//                                                    for (int i = 0; i <arrData.count; i++)
-//                                                    {
-//                                                        [formData appendPartWithFileData:[arrData objectAtIndex:i] name:[arrFileName objectAtIndex:i] fileName:@"Photo.mp4" mimeType:[arrFileType objectAtIndex:i]];
-//                                                    }
-//                                                }
-//                                                //cp
-//                                            }];
-//            AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//            [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-//             {
-//                 NSString *response = [operation responseString];
-//                 NSError *error;
-//                 if (response!=nil)
-//                 {
-//                     NSDictionary *responseDict = [NSJSONSerialization
-//                                                   JSONObjectWithData:[operation responseData] options:kNilOptions error:&error];
-//                     [app hideHUD];
-//                     if ([[responseDict valueForKey:@"status"] intValue]== 1)
-//                     {
-//                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfull" message:@"Event billboard created successfully." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alert show];
-//                     }
-//                     else
-//                     {
-//                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alrt show];
-//                     }
-//                 }
-//             }
-//                                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//             {
-//             }];
-//            [operation start];
         }
     }
 }
@@ -692,10 +552,6 @@
             [parameter setObject:@{@"data": imageData, @"name":imageName} forKey:@"image"];
             app.imageNo ++;
 
-            if(socialShareModalView.switchFB.isOn){
-                
-                [self postImageToFB:imageData];
-            }
             [[JWNetWorkManager sharedManager] POST:@"addbill_board.php" data:parameter completion:^(id data, NSError *error) {
                 [app hideHUD];
                 if (error) {
@@ -704,6 +560,30 @@
                     NSLog(@"%@ %@", error, data);
                     if ([[data valueForKey:@"status"] intValue]== 1)
                     {
+                        if(socialShareModalView.switchFB.isOn){
+                            
+                            [self postImageToFB:imageData];
+                        }
+                        if(socialShareModalView.switchIST.isOn){
+                            
+                            [self postImageToIST:imageData];
+                        }
+                        if(socialShareModalView.switchIN.isOn){
+                            
+                            [self postImageToIN:imageData];
+                        }
+                        if(socialShareModalView.switchGG.isOn){
+                            
+                            [self postImageToGG:imageData];
+                        }
+                        if(socialShareModalView.switchTW.isOn){
+                            
+                            [self shareTwitterImage:imageData];
+                        }
+                        if(socialShareModalView.switchPT.isOn){
+                            
+                            [self postImageToPT:[NSURL URLWithString:@""]];
+                        }
                         [self showAlert:@"Successfull" message:@"Discount billboard created successfully." cancel:@"OK" other:nil];
                     }
                     else
@@ -712,38 +592,6 @@
                     }
                 }
             }];
-//                        NSURL *codeURL = [NSURL URLWithString:mainUrl];
-//            AFHTTPClient *client= [AFHTTPClient clientWithBaseURL:codeURL];
-//            NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST" path:@"addbill_board.php"  parameters:parameters constructingBodyWithBlock: ^(id <AFMultipartFormData>formData)
-//                                            {
-//                                                [formData appendPartWithFileData:imageData name:@"image_name" fileName:imageName mimeType:@"image/png"];
-//                                            }];
-//            AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//            [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-//             {
-//                 NSString *response = [operation responseString];
-//                 NSError *error;
-//                 if (response!=nil)
-//                 {
-//                     NSDictionary *responseDict = [NSJSONSerialization
-//                                                   JSONObjectWithData:[operation responseData] options:kNilOptions error:&error];
-//                     [app hideHUD];
-//                     if ([[responseDict valueForKey:@"status"] intValue]== 1)
-//                     {
-//                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfull" message:@"Image billboard created successfully." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alert show];
-//                     }
-//                     else
-//                     {
-//                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alrt show];
-//                     }
-//                 }
-//             }
-//                                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//             {
-//             }];
-//            [operation start];
         }
     }
 }
@@ -820,42 +668,6 @@
                 }
             }];
             
-//            NSURL *codeURL = [NSURL URLWithString:mainUrl];
-//            AFHTTPClient *client= [AFHTTPClient clientWithBaseURL:codeURL];
-//            NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST" path:@"addbill_board.php"  parameters:parameters constructingBodyWithBlock: ^(id <AFMultipartFormData>formData)
-//                                            {
-//                                                for (int i = 0; i <arrData.count; i++)
-//                                                {
-//                                                    [formData appendPartWithFileData:[arrData objectAtIndex:i] name:[arrFileName objectAtIndex:i] fileName:@"Photo.mp4" mimeType:[arrFileType objectAtIndex:i]];
-//                                                }
-//                                            }];
-//            AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//            [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-//             {
-//                 NSString *response = [operation responseString];
-//                 NSError *error;
-//                 if (response!=nil)
-//                 {
-//                     NSDictionary *responseDict = [NSJSONSerialization
-//                                                   JSONObjectWithData:[operation responseData] options:kNilOptions
-//                                                   error:&error];
-//                     [app hideHUD];
-//                     if ([[responseDict valueForKey:@"status"] intValue]== 1)
-//                     {
-//                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfull" message:@"Video billboard created successfully." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alert show];
-//                     }
-//                     else
-//                     {
-//                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alrt show];
-//                     }
-//                 }
-//             }
-//                                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//             {
-//             }];
-//            [operation start];
         }
     }
 }
@@ -936,38 +748,6 @@
                 }
             }];
 
-//            NSURL *codeURL = [NSURL URLWithString:mainUrl];
-//            AFHTTPClient *client= [AFHTTPClient clientWithBaseURL:codeURL];
-//            NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST" path:@"addbill_board.php"  parameters:parameters constructingBodyWithBlock: ^(id <AFMultipartFormData>formData)
-//                                            {
-//                                            }];
-//            AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//            [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-//             {
-//                 NSString *response = [operation responseString];
-//                 NSError *error;
-//                 if (response!=nil)
-//                 {
-//                     NSDictionary *responseDict = [NSJSONSerialization
-//                                                   JSONObjectWithData:[operation responseData] options:kNilOptions error:&error];
-//                     [app hideHUD];
-//                     if ([[responseDict valueForKey:@"status"] intValue]== 1)
-//                     {
-//                         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Successfull" message:@"Social billboard created successfully." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alert show];
-//                     }
-//                     else
-//                     {
-//                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:@"Error" message:@"Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alrt show];
-//                     }
-//                 }
-//             }
-//                                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//             {
-//             }];
-//            
-//            [operation start];
         }
     }
 }
@@ -1774,6 +1554,9 @@
     [socialShareModalView.switchFB addTarget:self action:@selector(checkFBShare) forControlEvents:UIControlEventTouchUpInside];
     [socialShareModalView.switchTW addTarget:self action:@selector(checkTWShare) forControlEvents:UIControlEventTouchUpInside];
     [socialShareModalView.switchPT addTarget:self action:@selector(checkPTShare) forControlEvents:UIControlEventTouchUpInside];
+    [socialShareModalView.switchGG addTarget:self action:@selector(checkGGShare) forControlEvents:UIControlEventTouchUpInside];
+    [socialShareModalView.switchIST addTarget:self action:@selector(checkISTShare) forControlEvents:UIControlEventTouchUpInside];
+    [socialShareModalView.switchIN addTarget:self action:@selector(checkINShare) forControlEvents:UIControlEventTouchUpInside];
     [[KGModal sharedInstance] setCloseButtonType:KGModalCloseButtonTypeNone];
     [[KGModal sharedInstance] showWithContentView:socialShareModalView];
 }
@@ -1795,8 +1578,9 @@
     }];
     
 }
-- (void)shareTwitterImage:(UIImage *)image
+- (void)shareTwitterImage:(NSData *)image
 {
+    UIImage *postImage = [UIImage imageWithData:image];
     ACAccountStore *accountStore = [[ACAccountStore alloc] init];
     ACAccountType *accountType = [accountStore accountTypeWithAccountTypeIdentifier:ACAccountTypeIdentifierTwitter];
     
@@ -1812,7 +1596,7 @@
                  
                  TWRequest *postRequest = [[TWRequest alloc] initWithURL:[NSURL URLWithString:@"https://upload.twitter.com/1/statuses/update_with_media.json"] parameters:[NSDictionary dictionaryWithObject:@"" forKey:@"status"] requestMethod:TWRequestMethodPOST];
                  
-                 [postRequest addMultiPartData:UIImagePNGRepresentation(image) withName:@"media" type:@"multipart/png"];
+                 [postRequest addMultiPartData:UIImagePNGRepresentation(postImage) withName:@"media" type:@"multipart/png"];
                  
                  [postRequest setAccount:twitterAccount];
                  
@@ -1827,9 +1611,79 @@
      }];
 }
 - (void) checkPTShare {
-    
+    __weak typeof (self) weakSelf = self;
+    [[PDKClient sharedInstance] authenticateWithPermissions:@[PDKClientReadPublicPermissions]
+                                         fromViewController:self
+                                                withSuccess:^(PDKResponseObject *responseObject)
+     {
+         weakSelf.user = [responseObject user];
+         NSLog(@"%@", [NSString stringWithFormat:@"%@ authenticated!", weakSelf.user]);
+     } andFailure:^(NSError *error) {
+         NSLog(@"authentication failed!");
+     }];
 }
-
+- (void) checkISTShare {
+//    __weak typeof (self) weakSelf = self;
+//    [[PDKClient sharedInstance] authenticateWithPermissions:@[PDKClientReadPublicPermissions]
+//                                         fromViewController:self
+//                                                withSuccess:^(PDKResponseObject *responseObject)
+//     {
+//         weakSelf.user = [responseObject user];
+//         NSLog(@"%@", [NSString stringWithFormat:@"%@ authenticated!", weakSelf.user]);
+//     } andFailure:^(NSError *error) {
+//         NSLog(@"authentication failed!");
+//     }];
+}
+- (void) checkGGShare {
+//    __weak typeof (self) weakSelf = self;
+//    [[PDKClient sharedInstance] authenticateWithPermissions:@[PDKClientReadPublicPermissions]
+//                                         fromViewController:self
+//                                                withSuccess:^(PDKResponseObject *responseObject)
+//     {
+//         weakSelf.user = [responseObject user];
+//         NSLog(@"%@", [NSString stringWithFormat:@"%@ authenticated!", weakSelf.user]);
+//     } andFailure:^(NSError *error) {
+//         NSLog(@"authentication failed!");
+//     }];
+}
+- (void) checkINShare {
+//    __weak typeof (self) weakSelf = self;
+//    [[PDKClient sharedInstance] authenticateWithPermissions:@[PDKClientReadPublicPermissions]
+//                                         fromViewController:self
+//                                                withSuccess:^(PDKResponseObject *responseObject)
+//     {
+//         weakSelf.user = [responseObject user];
+//         NSLog(@"%@", [NSString stringWithFormat:@"%@ authenticated!", weakSelf.user]);
+//     } andFailure:^(NSError *error) {
+//         NSLog(@"authentication failed!");
+//     }];
+}
+- (void)postImageToIST:(NSData *)imageurl
+{
+}
+- (void)postImageToGG:(NSData *)imageurl
+{
+}
+- (void)postImageToIN:(NSData *)imageurl
+{
+}
+- (void)postImageToPT:(NSURL *)imageurl
+{
+    
+    [PDKPin pinWithImageURL:imageurl
+                       link:[NSURL URLWithString:@"https://www.pinterest.com"]
+         suggestedBoardName:@"EmpowerMainStreet"
+                       note:@"Empower Main Street"
+         fromViewController:self
+                withSuccess:^
+     {
+         NSLog(@"%@", [NSString stringWithFormat:@"successfully pinned pin"]);
+     }
+                 andFailure:^(NSError *error)
+     {
+         NSLog(@"pin it failed");
+     }];
+}
 
 - (void) checkFBShare {
     
@@ -1843,6 +1697,10 @@
     }
     
 }
+- (void)authenticateButtonTapped:(UIButton *)button
+{
+}
+
 -(void)loginWithFb
 {
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];

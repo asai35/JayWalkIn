@@ -2,7 +2,7 @@
 //  BillBoardVC.h
 //  Jwalkin
 //
-//  Created by Chanchal Warde on 5/18/15.
+//  Created by Asai on 5/18/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 

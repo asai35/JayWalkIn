@@ -2,7 +2,7 @@
 //  calloutView.m
 //  HuntersRoom
 //
-//  Created by Ashok Choudhary on 14/08/14.
+//  Created by Asai on 14/08/14.
 //  Copyright (c) 2014 Ramprakash. All rights reserved.
 //
 

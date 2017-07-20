@@ -16,7 +16,7 @@
                 <outlet property="btnHome" destination="4pw-rv-Vp1" id="hbb-m6-D9F"/>
                 <outlet property="btnMap" destination="5qW-bU-QO7" id="wm9-4h-X39"/>
                 <outlet property="btnSearch" destination="diB-fz-MlV" id="aT4-Zt-QUf"/>
-                <outlet property="lblDListSubCatName" destination="Q1q-Sy-4RE" id="tlr-o0-XLe"/>
+                <outlet property="lblDListSubCatName" destination="Q1q-Sy-4RE" id="bb2-Wk-raL"/>
                 <outlet property="picView" destination="TtB-Mb-wfd" id="e7x-pZ-MF2"/>
                 <outlet property="picker" destination="Kob-Kh-eU6" id="F92-wq-873"/>
                 <outlet property="searchBar" destination="qVm-kz-5Gs" id="pej-oj-g2E"/>
@@ -140,12 +140,12 @@
             <simulatedStatusBarMetrics key="simulatedStatusBarMetrics"/>
             <point key="canvasLocation" x="383" y="-516"/>
         </view>
-        <view contentMode="scaleToFill" id="vLG-I0-0hz">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <view contentMode="scaleToFill" misplaced="YES" id="vLG-I0-0hz">
+            <rect key="frame" x="0.0" y="0.0" width="346" height="44"/>
             <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
             <subviews>
                 <searchBar contentMode="redraw" id="qVm-kz-5Gs">
-                    <rect key="frame" x="0.0" y="0.0" width="281" height="44"/>
+                    <rect key="frame" x="0.0" y="0.0" width="304" height="44"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -156,7 +156,7 @@
                     </connections>
                 </searchBar>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="JYN-Cc-yxX">
-                    <rect key="frame" x="285" y="2" width="32" height="40"/>
+                    <rect key="frame" x="308" y="2" width="35" height="40"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     <state key="normal" image="Close">
                         <color key="titleShadowColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -169,6 +169,7 @@
             <color key="backgroundColor" red="0.29803922772407532" green="0.29803922772407532" blue="0.29803922772407532" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
             <nil key="simulatedStatusBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <point key="canvasLocation" x="396" y="-92"/>
         </view>
         <view contentMode="scaleToFill" id="TtB-Mb-wfd">
             <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>

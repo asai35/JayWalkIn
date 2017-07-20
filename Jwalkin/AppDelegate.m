@@ -2,7 +2,7 @@
 //  AppDelegate.m
 //  Jwalkin
 //
-//  Created by Kanika on 06/11/13.
+//  Created by Asai on 06/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
@@ -13,7 +13,7 @@
 #import <Crittercism/Crittercism.h>
 #import "WrapperClass.h"
 #import <TwitterKit/TwitterKit.h>
-
+#import <PDKClient.h>
 @implementation AppDelegate
 @synthesize viewController,navCtrl,clLocation,locationManager,isFromFav;
 @synthesize selectedCat;
@@ -23,8 +23,15 @@
 @synthesize selectedStateName;
 @synthesize selectedSubcatName;
 @synthesize imageNo;
+@synthesize udid;
 NSString *const kTwitterConsumerKey = @"sAht3uY2ncZ2OPt1wuD6zcWz9";
 NSString *const kTwitterCOnsumerSecret = @"your consumer secret";
+NSString *const kPDKAppId = @"4894554150523648334";
+NSString *const kPDKAppSecret = @"dc91af0738bc29651a81731f7f67212464fe9219c003a48c7c170fbcad47f22f";
+
+#define SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(v)  ([[[UIDevice currentDevice] systemVersion] compare:v options:NSNumericSearch] != NSOrderedAscending)
+
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Override point for customization after application launch.
@@ -33,11 +40,13 @@ NSString *const kTwitterCOnsumerSecret = @"your consumer secret";
     [Fabric with:@[[Crashlytics class]]];
 
     
-    viewController=[[ViewController alloc]init];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+//    viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
+//    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
 
-    self.navCtrl=[[UINavigationController alloc] initWithRootViewController:viewController];
-    
+//    self.navCtrl=[[UINavigationController alloc] initWithRootViewController:viewController];
+//    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+//    self.window.rootViewController = viewController;
+//    [self.window makeKeyAndVisible];
     selectedStateName = [[NSString alloc] init];
     selectedCatName = [[NSString alloc]init];
     selectedSubcatName = [[NSString alloc]init];
@@ -47,14 +56,14 @@ NSString *const kTwitterCOnsumerSecret = @"your consumer secret";
     selectedCatName = @"";
     
     //cp
-   // NSString *Udid=[[UIDevice currentDevice] uniqueGlobalDeviceIdentifier];
-    //NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
-//    [d setObject:Udid forKey:@"userid"];
-//    [d synchronize];
+    udid = [[UIDevice currentDevice] uniqueGlobalDeviceIdentifier];
+    NSUserDefaults *d = [NSUserDefaults standardUserDefaults];
+    [d setObject:udid forKey:@"udid"];
+    [d synchronize];
     //cp
-    self.navCtrl.navigationBarHidden=YES;
+//    self.navCtrl.navigationBarHidden=YES;
     [self copyDatabaseIfNeeded];
-    self.window.rootViewController = self.navCtrl;
+//    self.window.rootViewController = self.navCtrl;
     
     if ([[NSUserDefaults standardUserDefaults] objectForKey:@"ImageCount"])
     {
@@ -67,16 +76,77 @@ NSString *const kTwitterCOnsumerSecret = @"your consumer secret";
         imageNo = 0;
     }
     
-    [[UIApplication sharedApplication] setStatusBarHidden:NO];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [[UINavigationBar appearance] setBarStyle:UIBarStyleDefault];
     //NSLog(@"UIScreen height : %f",[UIScreen mainScreen].bounds.size.height);
     //Twitter secrect Key
-    
+    [PDKClient configureSharedInstanceWithAppId:kPDKAppId];
     [[Twitter sharedInstance] startWithConsumerKey:kTwitterConsumerKey consumerSecret:kTwitterCOnsumerSecret];
     [Fabric with:@[[Twitter class]]];
-    return [[FBSDKApplicationDelegate sharedInstance] application:application
-                                    didFinishLaunchingWithOptions:launchOptions];
+    [[FBSDKApplicationDelegate sharedInstance] application:application
+                             didFinishLaunchingWithOptions:launchOptions];
+
+    [self registerForRemoteNotification];
+    return YES;
 }
+
+/**
+ Notification Registration
+ */
+- (void)registerForRemoteNotification {
+    if(SYSTEM_VERSION_GRATERTHAN_OR_EQUALTO(@"10.0")) {
+        UNUserNotificationCenter *center = [UNUserNotificationCenter currentNotificationCenter];
+        center.delegate = self;
+        [center requestAuthorizationWithOptions:(UNAuthorizationOptionSound | UNAuthorizationOptionAlert | UNAuthorizationOptionBadge) completionHandler:^(BOOL granted, NSError * _Nullable error){
+            if( !error ){
+                [[UIApplication sharedApplication] registerForRemoteNotifications];
+            }
+        }];
+    }
+    else {
+        [[UIApplication sharedApplication] registerUserNotificationSettings:[UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeSound | UIUserNotificationTypeAlert | UIUserNotificationTypeBadge) categories:nil]];
+        [[UIApplication sharedApplication] registerForRemoteNotifications];
+    }
+}
+
+
+#pragma mark - Remote Notification Delegate // <= iOS 9.x
+
+- (void)application:(UIApplication *)application didRegisterUserNotificationSettings:(UIUserNotificationSettings *)notificationSettings {
+    [application registerForRemoteNotifications];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken{
+    NSString *strDevicetoken = [[NSString alloc]initWithFormat:@"%@",[[[deviceToken description] stringByTrimmingCharactersInSet:[NSCharacterSet characterSetWithCharactersInString:@"<>"]] stringByReplacingOccurrencesOfString:@" " withString:@""]];
+    NSLog(@"Device Token = %@",strDevicetoken);
+    self.strDeviceToken = strDevicetoken;
+}
+
+-(void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    NSLog(@"Push Notification Information : %@",userInfo);
+}
+
+-(void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    NSLog(@"%@ = %@", NSStringFromSelector(_cmd), error);
+    NSLog(@"Error = %@",error);
+}
+
+#pragma mark - UNUserNotificationCenter Delegate // >= iOS 10
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center willPresentNotification:(UNNotification *)notification withCompletionHandler:(void (^)(UNNotificationPresentationOptions options))completionHandler{
+    
+    NSLog(@"User Info = %@",notification.request.content.userInfo);
+    
+    completionHandler(UNNotificationPresentationOptionAlert | UNNotificationPresentationOptionBadge | UNNotificationPresentationOptionSound);
+}
+
+- (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler{
+    
+    NSLog(@"User Info = %@",response.notification.request.content.userInfo);
+    completionHandler();
+}
+
 
 -(void)showHUD
 {
@@ -116,12 +186,23 @@ NSString *const kTwitterCOnsumerSecret = @"your consumer secret";
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
+    if ([[PDKClient sharedInstance] handleCallbackURL:url]) {
+        return YES;
+    }
     return [[FBSDKApplicationDelegate sharedInstance] application:application
                                                           openURL:url
                                                 sourceApplication:sourceApplication
                                                        annotation:annotation];
 }
-							
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options{
+    if ([[PDKClient sharedInstance] handleCallbackURL:url]) {
+        return YES;
+    }
+    return [[FBSDKApplicationDelegate sharedInstance] application:app
+                                                          openURL:url options:@{}];
+}
+
+
 - (void)applicationWillResignActive:(UIApplication *)application
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
@@ -149,4 +230,8 @@ NSString *const kTwitterCOnsumerSecret = @"your consumer secret";
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+AppDelegate *appdelegate(void){
+    return (AppDelegate*)[[UIApplication sharedApplication] delegate];
+}
+
 @end

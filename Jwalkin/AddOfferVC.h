@@ -2,7 +2,7 @@
 //  AddOfferVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 22/07/15.
+//  Created by Asai on 22/07/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -11,9 +11,10 @@
 #import "AppDelegate.h"
 #import "RemoteImageView.h"
 
-@interface AddOfferVC : UIViewController<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate>
+@interface AddOfferVC : UIViewController<UIImagePickerControllerDelegate,UIActionSheetDelegate,UINavigationControllerDelegate,UITextFieldDelegate,UIGestureRecognizerDelegate, UITextViewDelegate>
 {
     IBOutlet UIScrollView *scrollOffer;
+    IBOutlet UIView *contentView;
     
     IBOutlet UITextField *txtTitle;
     IBOutlet UITextField *txtMaxCount;
@@ -22,7 +23,6 @@
     
     IBOutlet RemoteImageView *imgView;
     
-    IBOutlet UILabel *lblBarTitle;
     IBOutlet UILabel *lblStartOn;
     IBOutlet UILabel *lblExpireOn;
     
@@ -43,6 +43,7 @@
     NSCharacterSet *whitespace ;
 
 }
+@property (weak, nonatomic) IBOutlet UINavigationItem *navTitle;
 @property(nonatomic,strong)NSDictionary *dictOffer;
 @property(nonatomic)BOOL isUpdate;
 -(IBAction)btnBackClicked:(id)sender;

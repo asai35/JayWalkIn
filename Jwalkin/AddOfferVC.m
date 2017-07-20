@@ -2,7 +2,7 @@
 //  AddOfferVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 22/07/15.
+//  Created by Asai on 22/07/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -10,65 +10,28 @@
 #import "Reachability.h"
 #import "UrlFile.h"
 #import "AFNetworking.h"
-//#import "AFImageRequestOperation.h"
-#define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
-#define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) // iPhone and       iPod touch style UI
-
-#define IS_IPHONE_5_IOS7 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 568.0f)
-#define IS_IPHONE_6_IOS7 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 667.0f)
-#define IS_IPHONE_6P_IOS7 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height == 736.0f)
-#define IS_IPHONE_4_AND_OLDER_IOS7 (IS_IPHONE && [[UIScreen mainScreen] bounds].size.height < 568.0f)
-
-#define IS_IPHONE_5_IOS8 (IS_IPHONE && ([[UIScreen mainScreen] nativeBounds].size.height/[[UIScreen mainScreen] nativeScale]) == 568.0f)
-#define IS_IPHONE_6_IOS8 (IS_IPHONE && ([[UIScreen mainScreen] nativeBounds].size.height/[[UIScreen mainScreen] nativeScale]) == 667.0f)
-#define IS_IPHONE_6P_IOS8 (IS_IPHONE && ([[UIScreen mainScreen] nativeBounds].size.height/[[UIScreen mainScreen] nativeScale]) == 736.0f)
-#define IS_IPHONE_4_AND_OLDER_IOS8 (IS_IPHONE && ([[UIScreen mainScreen] nativeBounds].size.height/[[UIScreen mainScreen] nativeScale]) < 568.0f)
-
-#define IS_IPHONE_5 ( ( [ [ UIScreen mainScreen ] respondsToSelector: @selector( nativeBounds ) ] ) ? IS_IPHONE_5_IOS8 : IS_IPHONE_5_IOS7 )
-#define IS_IPHONE_6 ( ( [ [ UIScreen mainScreen ] respondsToSelector: @selector( nativeBounds ) ] ) ? IS_IPHONE_6_IOS8 : IS_IPHONE_6_IOS7 )
-#define IS_IPHONE_6P ( ( [ [ UIScreen mainScreen ] respondsToSelector: @selector( nativeBounds ) ] ) ? IS_IPHONE_6P_IOS8 : IS_IPHONE_6P_IOS7 )
-#define IS_IPHONE_4_AND_OLDER ( ( [ [ UIScreen mainScreen ] respondsToSelector: @selector( nativeBounds ) ] ) ? IS_IPHONE_4_AND_OLDER_IOS8 : IS_IPHONE_4_AND_OLDER_IOS7 )
-
-
-
-#define _IS_IPHONE_5 (IS_IPHONE && ([[UIScreen mainScreen] nativeBounds].size.height/[[UIScreen mainScreen] nativeScale]) == 568.0f)
-#define _IS_IPHONE_6 (IS_IPHONE && ([[UIScreen mainScreen] nativeBounds].size.height/[[UIScreen mainScreen] nativeScale]) == 667.0f)
-#define _IS_IPHONE_6P (IS_IPHONE && ([[UIScreen mainScreen] nativeBounds].size.height/[[UIScreen mainScreen] nativeScale]) == 736.0f)
-#define _IS_IPHONE_4_AND_OLDER (IS_IPHONE && ([[UIScreen mainScreen] nativeBounds].size.height/[[UIScreen mainScreen] nativeScale]) < 568.0f)
-
-
 
 @interface AddOfferVC ()
-
+{
+    int preOffset;
+}
 @end
 
 @implementation AddOfferVC
 @synthesize isUpdate,dictOffer;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     app = (AppDelegate *)[UIApplication sharedApplication].delegate;
-    
-        if (IS_IPHONE_4_AND_OLDER)
-        {
-            scrollOffer.contentSize =CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height-100);
-            
-        }
-        else
-        {
-            scrollOffer.contentSize =CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+140);
-        }
-   // scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+50);
+    CGRect rect = contentView.frame;
+    rect.size.width = self.view.frame.size.width -1;
+    contentView.frame = rect;
+    [contentView sizeToFit];
+    [scrollOffer addSubview:contentView];
     [self setEdgesInsectForTextField:txtMaxCount];
+    preOffset = 0;
+    txtVDescription.delegate = (id)self;
     [self setEdgesInsectForTextField:txtTitle];
     whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
     imgView.layer.borderColor =[[UIColor blackColor] CGColor];
@@ -78,13 +41,16 @@
     if (isUpdate)
     {
         [btnAdd setImage:[UIImage imageNamed:@"btn_submit"] forState:UIControlStateNormal];
-        lblBarTitle.text = @"Update Offer";
+        _navTitle.title = @"Update Offer";
         [self setData];
     }
 
-    // Do any additional setup after loading the view from its nib.
 }
+- (void) viewWillAppear:(BOOL)animated{
+    [super viewWillAppear:animated];
+    scrollOffer.contentSize =CGSizeMake(self.view.frame.size.width, btnAdd.frame.origin.y +50);
 
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -104,7 +70,7 @@
     [txtMaxCount resignFirstResponder];
     [txtTitle resignFirstResponder];
     [txtVDescription resignFirstResponder];
-    scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height);
+    scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y +50);
 
     if ([self validation])
     {
@@ -148,7 +114,7 @@
                         if ([[data valueForKey:@"status"] intValue]== 1)
                         {
                             UIAlertController *alert = [[UIAlertController alloc] init];
-                            alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:msg preferredStyle:UIAlertControllerStyleAlert];
+                            alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:msg preferredStyle:UIAlertControllerStyleAlert];
                             UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                     [self.navigationController popViewControllerAnimated:YES];
                             }];
@@ -226,7 +192,7 @@
                         if ([[data valueForKey:@"status"] intValue]== 1)
                         {
                             UIAlertController *alert = [[UIAlertController alloc] init];
-                            alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:msg preferredStyle:UIAlertControllerStyleAlert];
+                            alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:msg preferredStyle:UIAlertControllerStyleAlert];
                             UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                                     [self.navigationController popViewControllerAnimated:YES];
                             }];
@@ -288,27 +254,8 @@
     [txtMaxCount resignFirstResponder];
     [txtTitle resignFirstResponder];
     [txtVDescription resignFirstResponder];
-    if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
-    {
-        
-        if (IS_IPHONE_4_AND_OLDER)
-        {
-            scrollOffer.contentSize =CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height-100);
-            
-        }
-        else
-        {
-           scrollOffer.contentSize =CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+15);
-        }
-    }
-    else
-    {
-        
-        scrollOffer.contentSize =CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+160);
-    }
-    
-
-    scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+10);
+    [self.view endEditing:YES];
+    scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width, btnAdd.frame.origin.y +50);
     viewPicker.frame =self.view.frame;
     viewPicker.alpha = 0;
     btnTemp = (UIButton *)sender;
@@ -349,26 +296,10 @@
     [txtVDescription resignFirstResponder];
     [txtTitle resignFirstResponder];
     [txtMaxCount resignFirstResponder];
-    if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
-    {
-        
-        if (IS_IPHONE_4_AND_OLDER)
-        {
-            scrollOffer.contentSize =CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height-100);
-            
-        }
-        else
-        {
-            scrollOffer.contentSize =CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+15);
-        }
-    }
-    else
-    {
-        
-        scrollOffer.contentSize =CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+160);
-    }
 
-   // scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+10);
+    
+        scrollOffer.contentSize =CGSizeMake(self.view.frame.size.width, btnAdd.frame.origin.y +50);
+
     
     UIAlertController *alert = [[UIAlertController alloc] init];
     alert = [UIAlertController alertControllerWithTitle:nil message:nil preferredStyle:UIAlertControllerStyleActionSheet];
@@ -454,26 +385,21 @@
 
 -(BOOL)textFieldShouldBeginEditing:(UITextField *)textField
 {
-    if (textField.tag != 11)
-    {
-        scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+250);
-    }
     if (textField.tag == 11)
     {
-        if (scrollOffer.contentSize.height != btnAdd.frame.origin.y+btnAdd.frame.size.height+250)
-        {
-            [scrollOffer setContentOffset:CGPointMake(0,400) animated:YES];
-            scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+250);
-        }
-        
+//        [scrollOffer setContentOffset:CGPointMake(0, 400) animated:YES];
     }
     return YES;
 }
 
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+10);
+    if(textField.tag == 11){
+        [scrollOffer setContentOffset:CGPointMake(0, -400) animated:YES];
+    }
+    scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width, btnAdd.frame.origin.y +50);
     [textField resignFirstResponder];
+    [self.view endEditing:YES];
     return YES;
 }
 
@@ -486,7 +412,8 @@
     [txtMaxCount resignFirstResponder];
     [txtTitle resignFirstResponder];
     [txtVDescription resignFirstResponder];
-    scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width,btnAdd.frame.origin.y+btnAdd.frame.size.height+10);
+    [self.view endEditing:YES];
+    scrollOffer.contentSize = CGSizeMake(self.view.frame.size.width, btnAdd.frame.origin.y +50);
 }
 
 #pragma mark- Other Method
@@ -502,33 +429,33 @@
 {
     if ([txtTitle.text stringByTrimmingCharactersInSet:whitespace].length == 0 && [[txtTitle.text stringByTrimmingCharactersInSet:whitespace] isEqualToString:@""])
     {
-        [self showAlert:@"Jaywalk.In" message:@"Please enter title." cancel:@"OK" other:nil];
+        [self showAlert:@"Empower Main Street" message:@"Please enter title." cancel:@"OK" other:nil];
         return NO;
     }
     else if ([txtVDescription.text stringByTrimmingCharactersInSet:whitespace].length == 0 && [[txtVDescription.text stringByTrimmingCharactersInSet:whitespace] isEqualToString:@""])
     {
-        [self showAlert:@"Jaywalk.In" message:@"Please writes some description about offer." cancel:@"OK" other:nil];
+        [self showAlert:@"Empower Main Street" message:@"Please writes some description about offer." cancel:@"OK" other:nil];
         return NO;
     }
     else if(UIImagePNGRepresentation(imgView.image) == nil)
     {
         
-        [self showAlert:@"Alert" message:@"Please select offer image." cancel:@"OK" other:nil];
+        [self showAlert:@"Empower Main Street" message:@"Please select offer image." cancel:@"OK" other:nil];
         return NO;
     }
     else if ([lblStartOn.text stringByTrimmingCharactersInSet:whitespace].length == 0 && [[lblStartOn.text stringByTrimmingCharactersInSet:whitespace] isEqualToString:@""] )
     {
-        [self showAlert:@"Alert" message:@"Please select start date of the offer." cancel:@"OK" other:nil];
+        [self showAlert:@"Empower Main Street" message:@"Please select start date of the offer." cancel:@"OK" other:nil];
         return NO;
     }
     else if ([lblExpireOn.text stringByTrimmingCharactersInSet:whitespace].length == 0 && [[lblExpireOn.text stringByTrimmingCharactersInSet:whitespace] isEqualToString:@""] )
     {
-        [self showAlert:@"Alert" message:@"Please select expiry date of the offer." cancel:@"OK" other:nil];
+        [self showAlert:@"Empower Main Street" message:@"Please select expiry date of the offer." cancel:@"OK" other:nil];
        return NO;
     }
     else if ([txtMaxCount.text stringByTrimmingCharactersInSet:whitespace].length == 0 && [[txtMaxCount.text stringByTrimmingCharactersInSet:whitespace] isEqualToString:@""])
     {
-        [self showAlert:@"Alert" message:@"Please enter the max count" cancel:@"OK" other:nil];
+        [self showAlert:@"Empower Main Street" message:@"Please enter the max count" cancel:@"OK" other:nil];
         return NO;
     }
     else

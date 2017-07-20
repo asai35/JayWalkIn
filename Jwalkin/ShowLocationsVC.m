@@ -2,7 +2,7 @@
 //  ShowLocationsVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 11/11/13.
+//  Created by Asai on 11/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
@@ -17,25 +17,21 @@
 
 @implementation ShowLocationsVC
 @synthesize mapLat,mapLong,address,arrMapPoints,locationName;
-@synthesize strTitle,lblTitle;
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        // Custom initialization
-    }
-    return self;
-}
+@synthesize strTitle,coordinate;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    lblTitle.text = self.strTitle;
-    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
+    _navTitle.title = self.strTitle;
     for (int i =0; i<arrMapPoints.count; i++)
     {
         NSMutableDictionary *dic = [arrMapPoints objectAtIndex:i];
-        CLLocationCoordinate2D location = CLLocationCoordinate2DMake([[dic valueForKey:@"lat"] doubleValue],[[dic valueForKey:@"long"] doubleValue]);
+        CLLocationCoordinate2D location;
+        if ([dic valueForKey:@"lat"] != 0 && [dic valueForKey:@"long"] != 0) {
+            location = CLLocationCoordinate2DMake([[dic valueForKey:@"lat"] doubleValue],[[dic valueForKey:@"long"] doubleValue]);
+        }else{
+            location = CLLocationCoordinate2DMake([[dic valueForKey:@"latitude"] doubleValue],[[dic valueForKey:@"longitude"] doubleValue]);
+        }
         myMapView.mapType = MKMapTypeStandard;
         myMapView.delegate = self;
         //Add the annotation to our map view
@@ -62,7 +58,7 @@
             NSMutableDictionary *dic = [arrMapPoints objectAtIndex:countPins];
             NSString *Address=[dic valueForKey:@"merchant_address"];
             NSString *Location=[dic valueForKey:@"merchant_name"];
-            //NSLog(@"Locationname++===%@",Location);
+            NSLog(@"Locationname++===%@",Location);
 //            [self FindLocation:Address location:Location];
             
             countPins++;
@@ -173,10 +169,8 @@
     toLoc.latitude = mapView2.annotation.coordinate.latitude;
     toLoc.longitude = mapView2.annotation.coordinate.longitude;
     CLLocationCoordinate2D CurrentLoc;
-	//CurrentLoc.latitude= app.clLocation.coordinate.latitude;
-	//CurrentLoc.longitude= app.clLocation.coordinate.longitude;
-    CurrentLoc.latitude= 26.2389469;
-    CurrentLoc.longitude= 73.0243094;
+	CurrentLoc.latitude= appdelegate().clLocation.coordinate.latitude;
+	CurrentLoc.longitude= appdelegate().clLocation.coordinate.longitude;
    // NSInteger indexOfTheObject = [mapView2.annotation indexOfObject:view.annotation];
    // NSInteger indexOfTheObject = [mapView2.annotation indexOfObject:self.ViewOverLay];
     
@@ -403,9 +397,6 @@
     {
     }
     
-    
-  
-    
 }
 
 -(void)zoomToFitMapAnnotations:(MKMapView*)mapView
@@ -470,8 +461,6 @@
     
 }
 
-
-
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
     UITouch *tch = [[touches allObjects] lastObject];
@@ -480,8 +469,10 @@
     popupRect = [self.view convertRect:callView.frame fromView:refView1];
     
     btnFrameInPopUp=[self.view convertRect:callView.btnA.frame fromView:callView];
+    CGRect A=[self.view convertRect:callView.btnA.frame fromView:callView];
     CGRect B=[self.view convertRect:callView.btnB.frame fromView:callView];
     CGRect C=[self.view convertRect:callView.btnC.frame fromView:callView];
+    CGRect D=[self.view convertRect:callView.btnD.frame fromView:callView];
     
     
     if (CGRectContainsPoint(popupRect, touchLocation)&&isPopShowing)
@@ -503,7 +494,15 @@
             
         {
             [self btnCclickedOnpopUp  ];
-
+            
+            NSLog(@"button C Clicked");
+            
+        }
+        else if(CGRectContainsPoint(D, touchLocation))
+            
+        {
+            [self btnDclickedOnpopUp  ];
+            
             NSLog(@"button C Clicked");
             
         }
@@ -511,11 +510,23 @@
     }
     
 }
-
-
+-(IBAction)ShowCoupons
+{
+    NSMutableDictionary *dic_K = [self.arrMapPoints objectAtIndex:currentTag];
+    CouponVC *c = (CouponVC *)[self.storyboard instantiateViewControllerWithIdentifier:@"CouponVC"];
+    c.arrTempMerchantDetail = self.arrMapPoints;
+    c.tempMerchantTag = (int)currentTag;
+    c.strMName = [dic_K valueForKey:@"merchant_name"];
+    c.strMId = [dic_K valueForKey:@"merchant_id"];
+    [self.navigationController pushViewController:c animated:YES];
+}
 -(void)btnAclickedOnpopUp
 {
-    [self.navigationController popViewControllerAnimated:YES   ];
+    NSMutableDictionary *dic_K = [self.arrMapPoints objectAtIndex:currentTag];
+    NSUserDefaults *d1 = [NSUserDefaults standardUserDefaults];
+    [d1 setObject:[dic_K valueForKey:@"merchant_id"] forKey:@"merchant_id"];
+    [d1 synchronize];
+    [self ShowCoupons];
 }
 
 -(void)btnBclickedOnpopUp
@@ -530,7 +541,7 @@
     
     CLLocationCoordinate2D location1 = CLLocationCoordinate2DMake([[currentUserLocationDict valueForKey:@"lat"] doubleValue],[[currentUserLocationDict valueForKey:@"long"] doubleValue]);
     
-     CLLocationCoordinate2D location2 = CLLocationCoordinate2DMake(app.userNewLocatiion.coordinate.latitude,app.userNewLocatiion.coordinate.longitude);
+     CLLocationCoordinate2D location2 = CLLocationCoordinate2DMake(appdelegate().userNewLocatiion.coordinate.latitude,appdelegate().userNewLocatiion.coordinate.longitude);
     
     //App_Delegate.CurrentUserLocation.coordinate];
     NSString* saddr = [NSString stringWithFormat:@"%f,%f", location1.latitude, location1.longitude];
@@ -556,14 +567,27 @@
     if ([userInfo objectForKey:@"fb_link"] && [[userInfo objectForKey:@"fb_link"] isKindOfClass:[NSString class]] && [[userInfo objectForKey:@"fb_link"] length]>0) {
         fb_link = [userInfo objectForKey:@"fb_link"];
     }
-    else
-        if ([userInfo objectForKey:@"website"] && [[userInfo objectForKey:@"website"] isKindOfClass:[NSString class]] && [[userInfo objectForKey:@"website"] length]>0) {
-            fb_link = [userInfo objectForKey:@"website"];
-        }
-        else     if ([userInfo objectForKey:@"logo"] && [[userInfo objectForKey:@"logo"] isKindOfClass:[NSString class]] && [[userInfo objectForKey:@"logo"] length]>0) {
-            fb_link = [userInfo objectForKey:@"logo"];
-        }
     NSURL *url = [NSURL URLWithString:fb_link];
+    [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
+    
+}
+
+-(void)btnDclickedOnpopUp
+{
+    NSMutableDictionary *dic_K = [self.arrMapPoints objectAtIndex:currentTag];
+    NSDictionary *userInfo  = dic_K;
+    NSString *website = @"";
+    if ([userInfo objectForKey:@"website"] && [[userInfo objectForKey:@"website"] isKindOfClass:[NSString class]] && [[userInfo objectForKey:@"website"] length]>0) {
+        website = [userInfo objectForKey:@"website"];
+    }else{
+        return;
+    }
+    NSURL *url;
+    if ([website hasPrefix:@"http://"] || [website hasPrefix:@"https://"]) {
+        url = [NSURL URLWithString:website];
+    }else{
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", website]];
+    }
     [[UIApplication sharedApplication] openURL:url options:@{} completionHandler:nil];
     
 }
@@ -576,9 +600,6 @@
     [callView removeFromSuperview];
     isPopShowing=NO;
 }
-
-
-
 
 - (IBAction)BtnUserFBInfo:(id)sender{
 }

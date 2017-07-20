@@ -9,7 +9,7 @@ The PinterestSDK is a cocoapod. In order to use it you will need to create a `Po
 Open up the Podfile and add the following dependency:
 
 ```bash
-pod "PinterestSDK", :git => "git@github.com:pinterest/ios-pdk.git"
+pod "PinterestSDK", :git => "https://github.com/pinterest/ios-pdk.git"
 ```
 
 Save your Podfile and run 'pod install' from the command line.
@@ -33,7 +33,7 @@ The PinterestSDK will authenticate using OAuth either via the Pinterest app or, 
 ### Configuring PDKClient
 Before you make any calls using the PDKClient in your app, you will need to configure it with your appId: 
 
-```objective-c
+```objc
 [PDKClient configureSharedInstanceWithAppId:@"12345"];
 ```
 
@@ -43,19 +43,19 @@ The end of `application:didFinishLaunchingWithOptions:` seems like a reasonable 
 
 To authenticate a user, call authenticateWithPermissions:withSuccess:andFailure: on PDKClient. If the current auth token isn't valid or this is the first time you've requested a token, this call will cause an app switch to either the Pinterest app or Safari. To handle the switch back to your app, implement your app's application:openURL:sourceApplication:annotation: as follows:
 
-```
+```objc
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation
 {
-return [[PDKClient sharedInstance] handleCallbackURL:url];
+  return [[PDKClient sharedInstance] handleCallbackURL:url];
 }
 ```
 
 For iOS9 and latter application:openURL:sourceApplication:annotation: was deprecated, so you should implement application:openURL:options as follows:
 
-```
+```objc
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<NSString *,id> *)options
 {
-return [[PDKClient sharedInstance] handleCallbackURL:url];
+  return [[PDKClient sharedInstance] handleCallbackURL:url];
 }
 ```
 

@@ -2,7 +2,7 @@
 //  InfoVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 11/11/13.
+//  Created by Asai on 11/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
@@ -11,28 +11,21 @@
 #import "UrlFile.h"
 #import "SBJson5.h"
 #import "MBProgressHUD.h"
-
+#import <FBSDKShareKit/FBSDKSharingContent.h>
+#import <FBSDKShareKit/FBSDKShareLinkContent.h>
+#import <Twitter/Twitter.h>
+#import <TwitterKit/TwitterKit.h>
+#import <TwitterCore/TwitterCore.h>
 @interface InfoVC ()
 
 @end
 
 @implementation InfoVC
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self)
-    {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"status_bar"] forBarMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance]setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
 //    [btnFacebook setFrame:CGRectMake(btnFacebook.frame.origin.x, self.view.frame.size.height-65, btnFacebook.frame.size.width, btnFacebook.frame.size.height)];
 //    [btnMail setFrame:CGRectMake(btnMail.frame.origin.x, self.view.frame.size.height-65, btnMail.frame.size.width, btnMail.frame.size.height)];
 //    [btnTwitter setFrame:CGRectMake(btnTwitter.frame.origin.x, self.view.frame.size.height-65, btnTwitter.frame.size.width, btnTwitter.frame.size.height)];
@@ -81,24 +74,51 @@
 -(IBAction)FBClicked:(id)sender
 
 {
-     [self.ShareView setHidden:YES];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    btnCloseWebView.hidden=NO;
-    webViewFBTwitter.hidden=NO;
+//     [self.ShareView setHidden:YES];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    btnCloseWebView.hidden=NO;
+//    webViewFBTwitter.hidden=NO;
     NSURL *url = [NSURL URLWithString:@"http://www.facebook.com/pages/Jwalkin/225551014301348"];
-    [webViewFBTwitter loadRequest:[NSURLRequest requestWithURL:url]];
+//    [webViewFBTwitter loadRequest:[NSURLRequest requestWithURL:url]];
     //if (![[UIApplication sharedApplication] openURL:url])
        //NSLog(@"%@%@",@"Failed to open url:",[url description]);
+    FBSDKShareLinkContent *content = [[FBSDKShareLinkContent alloc] init];
+    content.contentURL = url;
+    content.contentDescription = @"Empower Main Street";
+    content.contentTitle = @"Empower Main Street";
+    FBSDKShareDialog *dialog = [[FBSDKShareDialog alloc] init];
+    dialog.fromViewController = self;
+    dialog.shareContent = content;
+    dialog.mode = FBSDKShareDialogModeNative;
+    if (!dialog.canShow) {
+        [dialog setMode:FBSDKShareDialogModeFeedBrowser];
+    }
+    [dialog show];
 }
 
 -(IBAction)TweetClicked:(id)sender
 {
-     [self.ShareView setHidden:YES];
-    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
-    btnCloseWebView.hidden=NO;
-    webViewFBTwitter.hidden=NO;
+//     [self.ShareView setHidden:YES];
+//    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+//    btnCloseWebView.hidden=NO;
+//    webViewFBTwitter.hidden=NO;
     NSURL *url = [NSURL URLWithString:@"http://twitter.com/jwalkinsmallbiz"];
-    [webViewFBTwitter loadRequest:[NSURLRequest requestWithURL:url]];
+//    [webViewFBTwitter loadRequest:[NSURLRequest requestWithURL:url]];
+    if ([SLComposeViewController isAvailableForServiceType:SLServiceTypeTwitter]){
+        SLComposeViewController *tweetSheet = [SLComposeViewController composeViewControllerForServiceType:SLServiceTypeTwitter];
+        [tweetSheet setInitialText:url.absoluteString];
+        [self presentViewController:tweetSheet animated:YES completion:nil];
+    }else{
+        TWTRComposer *composer = [[TWTRComposer alloc] init];
+        [composer setText:url.absoluteString];
+        [composer showFromViewController:self completion:^(TWTRComposerResult result) {
+            if (result == TWTRComposerResultCancelled) {
+                NSLog(@"%ld", (long)result);
+            }else{
+                NSLog(@"%ld", (long)result);
+            }
+        }];
+    }
 
 //    if (![[UIApplication sharedApplication] openURL:url])
 //        NSLog(@"%@%@",@"Failed to open url:",[url description]);

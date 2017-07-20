@@ -2,7 +2,7 @@
 //  CommentVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 24/06/15.
+//  Created by Asai on 24/06/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -148,7 +148,7 @@
         }
         else
         {
-            [self showAlert:@"Jaywalk.In" message:@"Please enter some comments" cancel:@"OK" other:nil];
+            [self showAlert:@"Empower Main Street" message:@"Please enter some comments" cancel:@"OK" other:nil];
         }
         [tvComment resignFirstResponder];
         [UIView animateWithDuration:0.40f animations:
@@ -167,10 +167,10 @@
         {
            
             UIAlertController *alert = [[UIAlertController alloc] init];
-            alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Sorry! you are not Login. You want to login with facebook?" preferredStyle:UIAlertControllerStyleAlert];
+            alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Sorry! you are not Login. You want to login with facebook?" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                         CGRect mainScreen = [UIScreen mainScreen].bounds;
-                        SignupVC *signup = [[SignupVC alloc] initWithNibName:@"SignupVC" bundle:nil];
+                    SignupVC *signup = [self.storyboard instantiateViewControllerWithIdentifier:@"SignupVC"];//[[SignupVC alloc] initWithNibName:@"SignupVC" bundle:nil];
                         [self.navigationController pushViewController:signup animated:YES];
                         [tvComment resignFirstResponder];
                         [UIView animateWithDuration:0.40f animations:
@@ -203,7 +203,7 @@
         }
         else
         {
-            [self showAlert:@"Jaywalk.In" message:@"Please enter some comments" cancel:@"OK" other:nil];
+            [self showAlert:@"Empower Main Street" message:@"Please enter some comments" cancel:@"OK" other:nil];
         }
     }
     else
@@ -240,7 +240,7 @@
         }
         else
         {
-            [self showAlert:@"Jaywalk.In" message:@"Please enter some comments" cancel:@"OK" other:nil];
+            [self showAlert:@"Empower Main Street" message:@"Please enter some comments" cancel:@"OK" other:nil];
         }
         [tblComment reloadData];
         tvComment.text =@"";
@@ -478,7 +478,7 @@
     }
     else
     {
-        [self showAlert:@"Jaywalk.In" message:[d valueForKey:@"message"] cancel:@"OK" other:nil];
+        [self showAlert:@"Empower Main Street" message:[d valueForKey:@"message"] cancel:@"OK" other:nil];
     }
 }
 - (void)showAlert:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel other:(NSString *)other{

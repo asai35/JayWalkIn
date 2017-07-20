@@ -2,7 +2,7 @@
 //  CommentCell.m
 //  Jwalkin
 //
-//  Created by Kanika on 24/06/15.
+//  Created by Asai on 24/06/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 

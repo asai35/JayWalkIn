@@ -2,7 +2,7 @@
 //  TownInfoCoupanVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 15/07/15.
+//  Created by Asai on 15/07/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 

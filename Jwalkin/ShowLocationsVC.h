@@ -2,7 +2,7 @@
 //  ShowLocationsVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 11/11/13.
+//  Created by Asai on 11/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
@@ -20,10 +20,9 @@
     double newLong;
 	int CountAnnotaionForTitle;
     NSArray *RouteArray;
-    AppDelegate *app;
     int countPins;
     CallOutViewForFeed *callViewFeed;
-       calloutView *callView;
+    calloutView *callView;
     
     CGRect popupRect;
     CGRect btnFrameInPopUp;
@@ -35,7 +34,7 @@
     CLLocationCoordinate2D locationPin;
 
 }
-@property(nonatomic,strong)IBOutlet UILabel *lblTitle;
+@property (strong, nonatomic) IBOutlet UINavigationItem *navTitle;
 @property(nonatomic,strong)NSString *strTitle;
 @property(nonatomic,strong)NSString *locationName;
 @property(nonatomic,retain)NSMutableArray *arrMapPoints;

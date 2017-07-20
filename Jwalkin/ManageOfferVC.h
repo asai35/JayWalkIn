@@ -2,7 +2,7 @@
 //  ManageOfferVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 22/07/15.
+//  Created by Asai on 22/07/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 

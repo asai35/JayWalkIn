@@ -9,10 +9,7 @@
 #ifndef Jwalkin_UrlFile_h
 #define Jwalkin_UrlFile_h
 
-
-//#define mainUrl @"http://198.57.247.185/~jwalkin/admin/api/"
 #define mainUrl @"http://emsbapp.com/admin/api/"
-
 
 #define allcatagories @"get_category.php"
 #define subcatagories @"getmerchantby_catsubcat.php"
@@ -23,6 +20,8 @@
 #define merchantRating @"merchant_rating.php"
 #define getInfoDetail @"getinfo.php"
 //cp
+#define getmerchantallbyradius @"getmerchants_allbyradius.php"
+#define getmerchantby_billboardtype @"getmerchantby_billboardtype.php"
 #define getbiillboardntowncat @"getTownInfoCenterbillboards.php"
 #define deletetowncategory @"delete_towncategory.php?"
 #define getAllBillBoard @"getmerchant_all_billboard.php"
@@ -46,7 +45,8 @@
 #define GetState @"http://emsbapp.com/admin/api/get_state.php"
 #define GetCategory @"http://emsbapp.com/admin/api/get_category.php"
 
-
+#define UIColorFromRGB(rgbValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
+#define UIColorFromRGBAndAlpha(rgbValue, alphaValue) [UIColor colorWithRed:((float)((rgbValue & 0xFF0000) >> 16))/255.0 green:((float)((rgbValue & 0xFF00) >> 8))/255.0 blue:((float)(rgbValue & 0xFF))/255.0 alpha:alphaValue]
 
 //Merchant Data Stored in dictionery NSUserDefaults with key "DictionaryMerchantData"
 #endif

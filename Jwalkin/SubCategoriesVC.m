@@ -2,7 +2,7 @@
 //  SubCategoriesVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 08/11/13.
+//  Created by Asai on 08/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
@@ -53,14 +53,14 @@
 @synthesize lblDListSubCatName,lblCouponMName,lblCouponMAddress,mainDict,catId,lblPercentage;
 @synthesize lblTotalWalkin;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
+//- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+//{
+//    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+//    if (self) {
+//        // Custom initialization
+//    }
+//    return self;
+//}
 
 - (void)viewDidLoad
 {
@@ -106,10 +106,9 @@
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
         [dict setValue:self.catId forKey:@"categoryid"];
         [dict setValue:[[arrSubcatagories objectAtIndex:0] valueForKey:@"subcategoryid"] forKey:@"subcategoryid"];
-        //[dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.latitude] forKey:@"latitude"];
-        //[dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.longitude] forKey:@"longitude"];
-        [dict setValue:[NSString stringWithFormat:@"%f",26.2389469] forKey:@"latitude"];
-        [dict setValue:[NSString stringWithFormat:@"%f",73.0243094] forKey:@"longitude"];
+        [dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.latitude] forKey:@"latitude"];
+        [dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.longitude] forKey:@"longitude"];
+
         [self GetAllVals];
         if ([lblDListSubCatName.text isEqual:[NSString stringWithFormat:@"%@", [mainDict objectForKey:@"category_name"]]])
         {
@@ -119,10 +118,8 @@
             NSString *radius =[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"radius"]];
           
             [dict setValue:radius forKey:@"radius"];
-            //[dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.latitude] forKey:@"latitude"];
-            //[dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.longitude] forKey:@"longitude"];
-            [dict setValue:[NSString stringWithFormat:@"%f",26.2389469] forKey:@"latitude"];
-            [dict setValue:[NSString stringWithFormat:@"%f",73.0243094] forKey:@"longitude"];
+            [dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.latitude] forKey:@"latitude"];
+            [dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.longitude] forKey:@"longitude"];
 
             [dict setObject:uid forKey:@"userid"];
             netUtills.tag = 1;
@@ -198,7 +195,7 @@
         }
         else
         {
-            [self showAlert:@"Jaywalk.In" message:@"No Data Found" cancel:@"OK" other:nil];
+            [self showAlert:@"Empower Main Street" message:@"No Data Found" cancel:@"OK" other:nil];
             tblMrchnt.hidden = YES;
             btnFav.userInteractionEnabled=YES;
             btnHome.userInteractionEnabled=YES;
@@ -220,7 +217,7 @@
         else
         {
             tblMrchnt.hidden = YES;
-            [self showAlert:@"Jaywalk.In" message:@"No Match Found" cancel:@"OK" other:nil];
+            [self showAlert:@"Empower Main Street" message:@"No Match Found" cancel:@"OK" other:nil];
             if ([arrAllMerchantCopy count] > 0)
             {
                 arrMerchantDetail = arrAllMerchantCopy;
@@ -395,10 +392,8 @@
         
         [dict setValue:self.catId forKey:@"categoryid"];
         [dict setValue:[arrSubCatIDs objectAtIndex:indexPath.row] forKey:@"subcategoryid"];
-        //[dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.latitude] forKey:@"latitude"];
-        //[dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.longitude] forKey:@"longitude"];
-        [dict setValue:[NSString stringWithFormat:@"%f",26.2389469] forKey:@"latitude"];
-        [dict setValue:[NSString stringWithFormat:@"%f",73.0243094] forKey:@"longitude"];
+        [dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.latitude] forKey:@"latitude"];
+        [dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.longitude] forKey:@"longitude"];
         
         [dict setObject:uid forKey:@"userid"];
         [dict setValue:radius forKey:@"radius"];
@@ -452,7 +447,7 @@
 -(IBAction)MakeACall:(id)sender
 {
     UIAlertController *alert = [[UIAlertController alloc] init];
-    alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Call local business?" preferredStyle:UIAlertControllerStyleAlert];
+    alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Call local business?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"Yes" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             NSMutableDictionary *dic_K = [arrMerchantDetail objectAtIndex:merchantTag];
             NSString * phoneNumber = [NSString stringWithFormat:@"tel://%@",[dic_K valueForKey:@"Phoneno"]];
@@ -485,13 +480,13 @@
         {
 //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Jaywalk.In" message:@"Added to favorites." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
 //            alert.tag = 3333;
-            [self showAlert:@"Jaywalk.In" message:@"Added to favorites." cancel:@"OK" other:nil];
+            [self showAlert:@"Empower Main Street" message:@"Added to favorites." cancel:@"OK" other:nil];
         }
         else
         {
 //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Jaywalk.In" message:@"Unable to add to favorites." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
 //            alert.tag = 4444;
-            [self showAlert:@"Jaywalk.In" message:@"Unable to add to favorites." cancel:@"OK" other:nil];
+            [self showAlert:@"Empower Main Street" message:@"Unable to add to favorites." cancel:@"OK" other:nil];
         }
     }
     else
@@ -501,7 +496,7 @@
         {
 //            UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Jaywalk.In" message:@"Removed from favorites." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil, nil];
 //            alert.tag = 5555;
-            [self showAlert:@"Jaywalk.In" message:@"Removed from favorites." cancel:@"OK" other:nil];
+            [self showAlert:@"Empower Main Street" message:@"Removed from favorites." cancel:@"OK" other:nil];
         }
     }
 }
@@ -509,7 +504,7 @@
 -(IBAction)ShowMeDirections:(id)sender
 {
     NSMutableDictionary *dic_K = [arrMerchantDetail objectAtIndex:merchantTag];
-    DirectionMapVC *direction = [[DirectionMapVC alloc] initWithNibName:@"DirectionMapVC" bundle:nil];
+    DirectionMapVC *direction = [self.storyboard instantiateViewControllerWithIdentifier:@"DirectionMapVC"];//[[DirectionMapVC alloc] initWithNibName:@"DirectionMapVC" bundle:nil];
     direction.strTitle = [dic_K valueForKey:@"merchant_name"];
     direction.address = [dic_K valueForKey:@"merchant_address"];
     [self.navigationController pushViewController:direction animated:YES];
@@ -518,7 +513,7 @@
 -(IBAction)ShowCoupons
 {
     NSMutableDictionary *dic_K = [arrMerchantDetail objectAtIndex:merchantTag];
-    CouponVC *c = [[CouponVC alloc] initWithNibName:@"CouponVC" bundle:nil];
+    CouponVC *c = (CouponVC *)[self.storyboard instantiateViewControllerWithIdentifier:@"CouponVC"];
     c.arrTempMerchantDetail = arrMerchantDetail;
     c.tempMerchantTag = (int)merchantTag;
     c.strMName = [dic_K valueForKey:@"merchant_name"];
@@ -528,7 +523,7 @@
 
 -(IBAction)ShowAllLocations:(id)sender
 {
-    ShowLocationsVC *direction = [[ShowLocationsVC alloc] initWithNibName:@"ShowLocationsVC" bundle:nil];
+    ShowLocationsVC *direction = [self.storyboard instantiateViewControllerWithIdentifier: @"ShowLocationsVC"];//[[ShowLocationsVC alloc] initWithNibName:@"ShowLocationsVC" bundle:nil];
     direction.strTitle = [mainDict valueForKey:@"category_name"];
     direction.arrMapPoints = arrMerchantDetail;
     [self.navigationController pushViewController:direction animated:YES];
@@ -547,7 +542,7 @@
 
 -(IBAction)ShowFav:(id)sender
 {
-    MyFavVC *my = [[MyFavVC alloc] initWithNibName:@"MyFavVC" bundle:nil];
+    MyFavVC *my = [self.storyboard instantiateViewControllerWithIdentifier:@"MyFavVC"];
     [self.navigationController pushViewController:my animated:YES];
 }
 
@@ -676,24 +671,24 @@
     }
     NSString *radius =[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults]valueForKey:@"radius"]];
     [dict setValue:radius forKey:@"radius"];
-    //[dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.latitude] forKey:@"latitude"];
-    //[dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.longitude] forKey:@"longitude"];
-    [dict setValue:[NSString stringWithFormat:@"%f",26.2389469] forKey:@"latitude"];
-    [dict setValue:[NSString stringWithFormat:@"%f",73.0243094] forKey:@"longitude"];
+    [dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.latitude] forKey:@"latitude"];
+    [dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.longitude] forKey:@"longitude"];
 
     [dict setObject:uid forKey:@"userid"];
 
-
+//    [[JWNetWorkManager sharedManager] GET:subcatagories data:dict completion:^(id data, NSError *error) {
+//        NSLog(@"%@", data);
+//    }];
     netUtills.tag = 1;
     [netUtills GetResponseByASIFormDataRequest:[NSString stringWithFormat:@"%@%@",mainUrl,subcatagories] WithDictionary:dict];
     
 //    picView.frame  = CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
-//    
+    
 //    [UIView beginAnimations:nil context:NULL];
 //    [UIView setAnimationDuration:0.5];
 //    
 //    picView.frame  = CGRectMake(0, 568, 320, 568);
-//   
+   
 //    [UIView commitAnimations];
     [UIView animateWithDuration:0.5 animations:^{
         picView.frame = CGRectMake(self.view.frame.origin.x, 580, self.view.frame.size.width, self.view.frame.size.height+15);

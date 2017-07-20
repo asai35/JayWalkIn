@@ -2,7 +2,7 @@
 //  ManageBillBoardCoupanVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 17/07/15.
+//  Created by Asai on 17/07/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -16,30 +16,21 @@
 @interface ManageBillBoardCoupanVC ()
 {
     NSString *str;
+    CGRect *rect;
 }
 @end
 
 @implementation ManageBillBoardCoupanVC
 @synthesize dictBillBoardInfo,strTitle;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     //NSLog(@"%@",dictBillBoardInfo);
+    [self setTitle:strTitle];
     arrTownCat =[[NSArray alloc]initWithObjects:@"Contest",@"Happy Hour",@"Breakfast Specials",@"Lunch Specials",@"Dinner Specials",@"Kids Activites",@"Events",@"Local Sales",@"School News",@"Town News",@"Holiday", nil];
     arrExpDate = [[NSArray alloc]initWithObjects:@"30",@"7",@"3",@"1" ,nil];
     [self SetPageControl];
-    lblMName.text =strTitle;
-    view1.layer.cornerRadius =5.0;
     imgViewBackground.layer.cornerRadius =5.0;
     imgViewBackground.layer.borderWidth = 1.0;
     imgViewBackground.layer.borderColor = [[UIColor whiteColor] CGColor];
@@ -63,7 +54,7 @@
 -(IBAction)btnDeleteClicked:(id)sender
 {
     UIAlertController *alert = [[UIAlertController alloc] init];
-    alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Are you sure you want to delete this billboard?" preferredStyle:UIAlertControllerStyleAlert];
+    alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Are you sure you want to delete this billboard?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self callDeleteApi];
     }];
@@ -157,7 +148,7 @@
     {
         if (tonwCat == nil)
         {
-            [self showAlert:@"Jaywalk.In" message:@"Please select town info category!" cancel:@"OK" other:nil];
+            [self showAlert:@"Empower Main Street" message:@"Please select town info category!" cancel:@"OK" other:nil];
             return;
         }
         netUtills = [[NetworkUtills alloc] initWithSelector:@selector(ParseResponseSave:) WithCallBackObject:self];
@@ -180,14 +171,14 @@
     }
     if (tonwCat == nil && time == nil)
     {
-        [self showAlert:@"Jaywalk.In" message:@"No changes in this billboard!" cancel:@"OK" other:nil];
+        [self showAlert:@"Empower Main Street" message:@"No changes in this billboard!" cancel:@"OK" other:nil];
     }
 }
 
 -(IBAction)btnTownInfoRemoveClicked:(id)sender
 {
     UIAlertController *alert = [[UIAlertController alloc] init];
-    alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Are you sure you want to remove this billboard from town info center?" preferredStyle:UIAlertControllerStyleAlert];
+    alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Are you sure you want to remove this billboard from town info center?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             [self callRemoveFromTownInfoApi];
     }];
@@ -319,7 +310,7 @@
     if ([st isEqualToString:@"1"])
     {
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:[NSString stringWithFormat:@"%@",[resDic objectForKey:@"message"]] preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:[NSString stringWithFormat:@"%@",[resDic objectForKey:@"message"]] preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 [self.navigationController popViewControllerAnimated:YES];
         }];
@@ -342,7 +333,7 @@
     if ([st isEqualToString:@"1"])
     {
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:[NSString stringWithFormat:@"%@",[resDic objectForKey:@"message"]] preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:[NSString stringWithFormat:@"%@",[resDic objectForKey:@"message"]] preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [alert dismissViewControllerAnimated:YES completion:^{
                 [self.navigationController popViewControllerAnimated:YES];
@@ -368,7 +359,7 @@
     if ([st isEqualToString:@"1"])
     {
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Billboard update successfully." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Billboard update successfully." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 [self.navigationController popViewControllerAnimated:YES];
         }];
@@ -391,7 +382,7 @@
     if ([st isEqualToString:@"1"])
     {
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Billboard deleted from town info center successfully." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Billboard deleted from town info center successfully." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [alert dismissViewControllerAnimated:YES completion:^{
                 [self.navigationController popViewControllerAnimated:YES];
@@ -429,7 +420,7 @@
         else
         {
             UIAlertController *alert = [[UIAlertController alloc] init];
-            alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Billboard update successfully." preferredStyle:UIAlertControllerStyleAlert];
+            alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Billboard update successfully." preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     [self.navigationController popViewControllerAnimated:YES];
             }];
@@ -447,8 +438,7 @@
 
 -(void)SetPageControl
 {
-    CGRect mainScreen = [UIScreen mainScreen].bounds;
-    
+    CGRect mainScreen = CGRectMake(0, 64, [UIScreen mainScreen].bounds.size.width * 0.95, [UIScreen mainScreen].bounds.size.height - 79);
     NSString *townCat;
     if (![[dictBillBoardInfo valueForKey:@"BillboardType"] isEqualToString:@"Social"])
     {
@@ -466,31 +456,31 @@
             
             if (mainScreen.size.height == 480)
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+10, view1.frame.size.width-10, 80)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+10, mainScreen.size.width-10, 80)];
             }
             
             
             else
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, view1.frame.size.width-10, 100)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, mainScreen.size.width-10, 100)];
             }
         }
         else if (![[NSString stringWithFormat:@"%@",[[dictBillBoardInfo valueForKey:@"Discount_image"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@"http://emsbapp.com/admin/images/no_image.jpg"]  || ![[NSString stringWithFormat:@"%@",[[dictBillBoardInfo valueForKey:@"Discount_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@"http://emsbapp.com/admin/images/no_image.jpg"])
         {
-            wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+23, view1.frame.size.width-10, 70)];
+            wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+23, mainScreen.size.width-10, 70)];
         }
         else
         {
             if (mainScreen.size.height == 480)
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-270)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, mainScreen.size.width-10, mainScreen.size.height-270)];
             }
             
             else if (IS_IPHONE_6P)
             {
              
                 
-            wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+30, view1.frame.size.width-10, view1.frame.size.height-200)];
+            wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+30, mainScreen.size.width-10, mainScreen.size.height-200)];
                 
             
             }
@@ -498,14 +488,14 @@
             {
                 
                 
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+30, view1.frame.size.width-10, view1.frame.size.height-200)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+30, mainScreen.size.width-10, mainScreen.size.height-200)];
                 
                 
             }
 
             else
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-200)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, mainScreen.size.width-10, mainScreen.size.height-200)];
             }
             
         }
@@ -560,25 +550,25 @@
 
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
                 else
                 {
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(view1.frame.origin.x+5, lblTitle.frame.size.height+150, view1.frame.size.width/2+5,view1.frame.size.width/2);
+                        img.frame=CGRectMake(mainScreen.origin.x+5, lblTitle.frame.size.height+150, mainScreen.size.width/2+5,mainScreen.size.width/2);
                     }
                     else if (IS_IPHONE_6P)
                     {
                         
                         
-                        img.frame=CGRectMake(5, lblTitle.frame.size.height+170, view1.frame.size.width/2+35,view1.frame.size.width/2+35);
-                        //img.frame=CGRectMake(view1.frame.origin.x+5, lblTitle.frame.size.height+170, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+170, mainScreen.size.width/2+35,mainScreen.size.width/2+35);
+                        //img.frame=CGRectMake(mainScreen.origin.x+5, lblTitle.frame.size.height+170, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                     }
                     
                     else{
        
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+150, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+150, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
                 }
                 
@@ -587,23 +577,23 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                     img.frame=CGRectMake(5, lblTitle.frame.size.height+50, view1.frame.size.width-10, view1.frame.size.height-300);
-                    // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                     img.frame=CGRectMake(5, lblTitle.frame.size.height+50, mainScreen.size.width-10, mainScreen.size.height-300);
+                    // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                 }
                 else
                 {
                    // CGSize winSize=[UIScreen mainScreen].bounds.size;
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, view1.frame.size.width -20,view1.frame.size.height-250);
+                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, mainScreen.size.width -20,mainScreen.size.height-250);
                     }
                    else if (IS_IPHONE_6P)
                     {
-                         img.frame=CGRectMake(43, lblTitle.frame.size.height+110, view1.frame.size.width,view1.frame.size.height-200);
+                         img.frame=CGRectMake(43, lblTitle.frame.size.height+110, mainScreen.size.width,mainScreen.size.height-200);
                     }
                    else
                    {
-                         img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10,view1.frame.size.height-270);
+                         img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10,mainScreen.size.height-270);
                    }
 
                    
@@ -632,23 +622,23 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(view1.frame.size.width/2+5,lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(mainScreen.size.width/2+5,lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
                 else
                     
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(view1.frame.size.width/2+30,lblTitle.frame.size.height+150, view1.frame.size.width/2,view1.frame.size.width/2);
+                        img.frame=CGRectMake(mainScreen.size.width/2+30,lblTitle.frame.size.height+150, mainScreen.size.width/2,mainScreen.size.width/2);
                     }
                 else if (IS_IPHONE_6P)
                 {
                     
-                     img.frame=CGRectMake(view1.frame.size.width/2+45,lblTitle.frame.size.height+170, view1.frame.size.width/2+35,view1.frame.size.width/2+35);
+                     img.frame=CGRectMake(mainScreen.size.width/2+45,lblTitle.frame.size.height+170, mainScreen.size.width/2+35,mainScreen.size.width/2+35);
                 }
                 else
                 {
                 
-                 img.frame=CGRectMake(view1.frame.size.width/2,lblTitle.frame.size.height+150, view1.frame.size.width/2-5,view1.frame.size.width/2-10);
+                 img.frame=CGRectMake(mainScreen.size.width/2,lblTitle.frame.size.height+150, mainScreen.size.width/2-5,mainScreen.size.width/2-10);
                 
                 
                 }
@@ -658,21 +648,21 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-370);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-370);
                 }
                 else
                     
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, view1.frame.size.width -20,view1.frame.size.height-250);
-                         //img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, mainScreen.size.width -20,mainScreen.size.height-250);
+                         //img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                     }
                 else if (IS_IPHONE_6P)
                 {
                     
-                      img.frame=CGRectMake(43, lblTitle.frame.size.height+110, view1.frame.size.width,view1.frame.size.height-200);
+                      img.frame=CGRectMake(43, lblTitle.frame.size.height+110, mainScreen.size.width,mainScreen.size.height-200);
                 
-                // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                 
                 }
                 else
@@ -680,7 +670,7 @@
                 
                 
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+90, view1.frame.size.width-10, view1.frame.size.height-280);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+90, mainScreen.size.width-10, mainScreen.size.height-280);
                 }
             }
             img.backgroundColor=[UIColor blackColor];
@@ -717,27 +707,27 @@
         {
             if (mainScreen.size.height == 480)
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+10, view1.frame.size.width-10, 80)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+10, mainScreen.size.width-10, 80)];
             }
             else
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, view1.frame.size.width-10, 100)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, mainScreen.size.width-10, 100)];
             }
         }
         
         else if (![[NSString stringWithFormat:@"%@",[[dictBillBoardInfo valueForKey:@"Promo_image"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@"http://emsbapp.com/admin/images/no_image.jpg"]  || ![[NSString stringWithFormat:@"%@",[[dictBillBoardInfo valueForKey:@"Promo_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@"http://emsbapp.com/admin/images/no_image.jpg"])
         {
-            wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, view1.frame.size.width-10, 70)];
+            wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, mainScreen.size.width-10, 70)];
         }
         else
         {
             if (mainScreen.size.height == 480)
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-270)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, mainScreen.size.width-10, mainScreen.size.height-270)];
             }
             else
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-200)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, mainScreen.size.width-10, mainScreen.size.height-200)];
             }
 
         }
@@ -788,44 +778,44 @@
             {
               /*  if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
                 else
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+150, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+150, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
             }
             else
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-370);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-370);
                 }
                 else
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                 }*/
                 
                 //Dp1Jan2016
 
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
                 else
                 {
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(view1.frame.origin.x+5, lblTitle.frame.size.height+150, view1.frame.size.width/2+5,view1.frame.size.width/2);
+                        img.frame=CGRectMake(mainScreen.origin.x+5, lblTitle.frame.size.height+150, mainScreen.size.width/2+5,mainScreen.size.width/2);
                     }
                     else if (IS_IPHONE_6P)
                     {
-                        img.frame=CGRectMake(view1.frame.origin.x+15, lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                        img.frame=CGRectMake(mainScreen.origin.x+15, lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                     }
                     
                     else{
                         
-                        img.frame=CGRectMake(5, lblTitle.frame.size.height+150, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+150, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                     }
                 }
                 
@@ -834,24 +824,24 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+50, view1.frame.size.width-10, view1.frame.size.height-300);
-                    // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+50, mainScreen.size.width-10, mainScreen.size.height-300);
+                    // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                 }
                 else
                 {
                     // CGSize winSize=[UIScreen mainScreen].bounds.size;
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, view1.frame.size.width -20,view1.frame.size.height-250);
+                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, mainScreen.size.width -20,mainScreen.size.height-250);
                     }
                     else if (IS_IPHONE_6P)
                     {
-                         img.frame=CGRectMake(43, lblTitle.frame.size.height+110, view1.frame.size.width,view1.frame.size.height-200);
+                         img.frame=CGRectMake(43, lblTitle.frame.size.height+110, mainScreen.size.width,mainScreen.size.height-200);
                         
                     }
                     else
                     {
-                        img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10,view1.frame.size.height-270);
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10,mainScreen.size.height-270);
                     }
                     
                     
@@ -879,23 +869,23 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(view1.frame.size.width/2+5,lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(mainScreen.size.width/2+5,lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
 
                 }
                 else
                 {
-                    img.frame=CGRectMake(view1.frame.size.width/2+5,lblTitle.frame.size.height+150, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(mainScreen.size.width/2+5,lblTitle.frame.size.height+150, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
             }
             else
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-370);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-370);
                 }
                 else
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                 }
 
             }*/
@@ -906,22 +896,22 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(view1.frame.size.width/2+5,lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(mainScreen.size.width/2+5,lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
                 else
                     
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(view1.frame.size.width/2+30,lblTitle.frame.size.height+150, view1.frame.size.width/2,view1.frame.size.width/2);
+                        img.frame=CGRectMake(mainScreen.size.width/2+30,lblTitle.frame.size.height+150, mainScreen.size.width/2,mainScreen.size.width/2);
                     }
                     else if (IS_IPHONE_6P)
                     {
-                        img.frame=CGRectMake(view1.frame.size.width/2+20,lblTitle.frame.size.height+150, view1.frame.size.width/2,view1.frame.size.width/2);
+                        img.frame=CGRectMake(mainScreen.size.width/2+20,lblTitle.frame.size.height+150, mainScreen.size.width/2,mainScreen.size.width/2);
                     }
                     else
                     {
                         
-                        img.frame=CGRectMake(view1.frame.size.width/2,lblTitle.frame.size.height+150, view1.frame.size.width/2-5,view1.frame.size.width/2-10);
+                        img.frame=CGRectMake(mainScreen.size.width/2,lblTitle.frame.size.height+150, mainScreen.size.width/2-5,mainScreen.size.width/2-10);
                         
                         
                     }
@@ -931,21 +921,21 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-370);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-370);
                 }
                 else
                     
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, view1.frame.size.width -20,view1.frame.size.height-250);
-                        //img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, mainScreen.size.width -20,mainScreen.size.height-250);
+                        //img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                     }
                     else if (IS_IPHONE_6P)
                     {
                         
-                        img.frame=CGRectMake(43, lblTitle.frame.size.height+110, view1.frame.size.width,view1.frame.size.height-200);
+                        img.frame=CGRectMake(43, lblTitle.frame.size.height+110, mainScreen.size.width,mainScreen.size.height-200);
                         
-                        // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                        // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                         
                     }
                     else
@@ -953,7 +943,7 @@
                         
                         
                     {
-                        img.frame=CGRectMake(5, lblTitle.frame.size.height+90, view1.frame.size.width-10, view1.frame.size.height-280);
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+90, mainScreen.size.width-10, mainScreen.size.height-280);
                     }
             }
 
@@ -991,28 +981,28 @@
         {
             if (mainScreen.size.height == 480)
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+10, view1.frame.size.width-10, 80)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+10, mainScreen.size.width-10, 80)];
             }
             else
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, view1.frame.size.width-10, 100)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, mainScreen.size.width-10, 100)];
             }
 
         }
         
         else if (![[NSString stringWithFormat:@"%@",[[dictBillBoardInfo valueForKey:@"Event_image"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@"http://emsbapp.com/admin/images/no_image.jpg"]  || ![[NSString stringWithFormat:@"%@",[[dictBillBoardInfo valueForKey:@"Event_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@"http://emsbapp.com/admin/images/no_image.jpg"])
         {
-            wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, view1.frame.size.width-10, 70)];
+            wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, mainScreen.size.width-10, 70)];
         }
         else
         {
             if (mainScreen.size.height == 480)
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-270)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, mainScreen.size.width-10, mainScreen.size.height-270)];
             }
             else
             {
-                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-200)];
+                wb = [[UITextView alloc] initWithFrame:CGRectMake(7, lblTitle.frame.size.height+20, mainScreen.size.width-10, mainScreen.size.height-200)];
             }
 
         }
@@ -1067,22 +1057,22 @@
             {
                 /*if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
                 else
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+150, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+150, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
             }
             else
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-370);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-370);
                 }
                 else
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                 }
 
             }*/
@@ -1090,22 +1080,22 @@
                 
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
                 else
                 {
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(view1.frame.origin.x+5, lblTitle.frame.size.height+150, view1.frame.size.width/2+5,view1.frame.size.width/2);
+                        img.frame=CGRectMake(mainScreen.origin.x+5, lblTitle.frame.size.height+150, mainScreen.size.width/2+5,mainScreen.size.width/2);
                     }
                     else if (IS_IPHONE_6P)
                     {
-                        img.frame=CGRectMake(view1.frame.origin.x+15, lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                        img.frame=CGRectMake(mainScreen.origin.x+15, lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                     }
                     
                     else{
                         
-                        img.frame=CGRectMake(5, lblTitle.frame.size.height+150, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+150, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                     }
                 }
                 
@@ -1114,23 +1104,23 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+50, view1.frame.size.width-10, view1.frame.size.height-300);
-                    // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+50, mainScreen.size.width-10, mainScreen.size.height-300);
+                    // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                 }
                 else
                 {
                     // CGSize winSize=[UIScreen mainScreen].bounds.size;
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, view1.frame.size.width -20,view1.frame.size.height-250);
+                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, mainScreen.size.width -20,mainScreen.size.height-250);
                     }
                     else if (IS_IPHONE_6P)
                     {
-                         img.frame=CGRectMake(43, lblTitle.frame.size.height+110, view1.frame.size.width,view1.frame.size.height-200);
+                         img.frame=CGRectMake(43, lblTitle.frame.size.height+110, mainScreen.size.width,mainScreen.size.height-200);
                     }
                     else
                     {
-                        img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10,view1.frame.size.height-270);
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10,mainScreen.size.height-270);
                     }
                     
                     
@@ -1156,11 +1146,11 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(view1.frame.size.width/2+5,lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(mainScreen.size.width/2+5,lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
                 else
                 {
-                    img.frame=CGRectMake(view1.frame.size.width/2+5,lblTitle.frame.size.height+150, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(mainScreen.size.width/2+5,lblTitle.frame.size.height+150, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
                 
             }
@@ -1168,11 +1158,11 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-370);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-370);
                 }
                 else
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                 }
             }*/
             
@@ -1181,22 +1171,22 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(view1.frame.size.width/2+5,lblTitle.frame.size.height+100, view1.frame.size.width/2-10,view1.frame.size.width/2-10);
+                    img.frame=CGRectMake(mainScreen.size.width/2+5,lblTitle.frame.size.height+100, mainScreen.size.width/2-10,mainScreen.size.width/2-10);
                 }
                 else
                     
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(view1.frame.size.width/2+30,lblTitle.frame.size.height+150, view1.frame.size.width/2,view1.frame.size.width/2);
+                        img.frame=CGRectMake(mainScreen.size.width/2+30,lblTitle.frame.size.height+150, mainScreen.size.width/2,mainScreen.size.width/2);
                     }
                     else if (IS_IPHONE_6P)
                     {
-                        img.frame=CGRectMake(view1.frame.size.width/2+20,lblTitle.frame.size.height+150, view1.frame.size.width/2,view1.frame.size.width/2);
+                        img.frame=CGRectMake(mainScreen.size.width/2+20,lblTitle.frame.size.height+150, mainScreen.size.width/2,mainScreen.size.width/2);
                     }
                     else
                     {
                         
-                        img.frame=CGRectMake(view1.frame.size.width/2,lblTitle.frame.size.height+150, view1.frame.size.width/2-5,view1.frame.size.width/2-10);
+                        img.frame=CGRectMake(mainScreen.size.width/2,lblTitle.frame.size.height+150, mainScreen.size.width/2-5,mainScreen.size.width/2-10);
                         
                         
                     }
@@ -1206,21 +1196,21 @@
             {
                 if (mainScreen.size.height == 480)
                 {
-                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-370);
+                    img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-370);
                 }
                 else
                     
                     if (IS_IPHONE_6)
                     {
-                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, view1.frame.size.width -20,view1.frame.size.height-250);
-                        //img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                        img.frame=CGRectMake(35, lblTitle.frame.size.height+100, mainScreen.size.width -20,mainScreen.size.height-250);
+                        //img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                     }
                     else if (IS_IPHONE_6P)
                     {
                         
-                        img.frame=CGRectMake(43, lblTitle.frame.size.height+110, view1.frame.size.width,view1.frame.size.height-200);
+                        img.frame=CGRectMake(43, lblTitle.frame.size.height+110, mainScreen.size.width,mainScreen.size.height-200);
                         
-                        // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+                        // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
                         
                     }
                     else
@@ -1228,7 +1218,7 @@
                         
                         
                     {
-                        img.frame=CGRectMake(5, lblTitle.frame.size.height+90, view1.frame.size.width-10, view1.frame.size.height-280);
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+90, mainScreen.size.width-10, mainScreen.size.height-280);
                     }
             }
 
@@ -1297,11 +1287,11 @@
         
        /* if (mainScreen.size.height == 480)
         {
-            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, view1.frame.size.width-10, view1.frame.size.height-320);
+            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, mainScreen.size.width-10, mainScreen.size.height-320);
         }
         else
         {
-            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, view1.frame.size.width-10, view1.frame.size.height-220);
+            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, mainScreen.size.width-10, mainScreen.size.height-220);
         }*/
         
         
@@ -1309,30 +1299,28 @@
         
          if (mainScreen.size.height == 480)
         {
-            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, view1.frame.size.width-10, view1.frame.size.height-300);
-            // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, mainScreen.size.width-10, mainScreen.size.height-300);
+            // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
         }
         else
         {
             // CGSize winSize=[UIScreen mainScreen].bounds.size;
             if (IS_IPHONE_6)
             {
-                img.frame=CGRectMake(35, lblTitle.frame.size.height+100, view1.frame.size.width -20,view1.frame.size.height-250);
+                img.frame=CGRectMake(35, lblTitle.frame.size.height+100, mainScreen.size.width -20,mainScreen.size.height-250);
             }
             else if (IS_IPHONE_6P)
             {
-                  img.frame=CGRectMake(43, lblTitle.frame.size.height+110, view1.frame.size.width,view1.frame.size.height-200);
+                  img.frame=CGRectMake(43, lblTitle.frame.size.height+110, mainScreen.size.width,mainScreen.size.height-200);
             }
             else
             {
-                img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10,view1.frame.size.height-270);
+                img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10,mainScreen.size.height-270);
             }
             
             
         }
   
-
-    
         img.backgroundColor=[UIColor blackColor];
         img.tag=999;
         img.contentMode = UIViewContentModeScaleToFill;
@@ -1384,11 +1372,11 @@
       
 //        if (mainScreen.size.height == 480)
 //        {
-//            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, view1.frame.size.width-10, view1.frame.size.height-320);
+//            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, mainScreen.size.width-10, mainScreen.size.height-320);
 //        }
 //        else
 //        {
-//            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, view1.frame.size.width-10, view1.frame.size.height-220);
+//            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, mainScreen.size.width-10, mainScreen.size.height-220);
 //        }
         
         
@@ -1399,23 +1387,23 @@
         
         if (mainScreen.size.height == 480)
         {
-            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, view1.frame.size.width-10, view1.frame.size.height-300);
-            // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10, view1.frame.size.height-270);
+            img.frame=CGRectMake(5, lblTitle.frame.size.height+50, mainScreen.size.width-10, mainScreen.size.height-300);
+            // img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10, mainScreen.size.height-270);
         }
         else
         {
             // CGSize winSize=[UIScreen mainScreen].bounds.size;
             if (IS_IPHONE_6)
             {
-                img.frame=CGRectMake(35, lblTitle.frame.size.height+100, view1.frame.size.width -20,view1.frame.size.height-250);
+                img.frame=CGRectMake(35, lblTitle.frame.size.height+100, mainScreen.size.width -20,mainScreen.size.height-250);
             }
             else if ( IS_IPHONE_6P)
             {
-                 img.frame=CGRectMake(43, lblTitle.frame.size.height+110, view1.frame.size.width,view1.frame.size.height-200);
+                 img.frame=CGRectMake(43, lblTitle.frame.size.height+110, mainScreen.size.width,mainScreen.size.height-200);
             }
             else
             {
-                img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width-10,view1.frame.size.height-270);
+                img.frame=CGRectMake(5, lblTitle.frame.size.height+100, mainScreen.size.width-10,mainScreen.size.height-270);
             }
             
             
@@ -1467,14 +1455,7 @@
             lblExpiryStatus.hidden=NO;
         }
         UIWebView *wb;
-        if (mainScreen.size.height == 480)
-        {
-            wb = [[UIWebView alloc] initWithFrame:CGRectMake(5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-210)];
-        }
-        else
-        {
-            wb = [[UIWebView alloc] initWithFrame:CGRectMake(5, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-150)];
-        }
+            wb = [[UIWebView alloc] initWithFrame:CGRectMake(5, lblTitle.frame.size.height+20, mainScreen.size.width-10, mainScreen.size.height-200)];
         
         wb.backgroundColor = [UIColor clearColor];
         wb.opaque=NO;

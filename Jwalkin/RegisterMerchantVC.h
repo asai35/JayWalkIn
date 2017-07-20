@@ -2,7 +2,7 @@
 //  RegisterMerchantVC.h
 //  Jwalkin
 //
-//  Created by Chanchal Warde on 5/14/15.
+//  Created by Asai on 5/14/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -98,13 +98,13 @@
     IBOutlet UIButton *btnState;
     IBOutlet UIButton *btnCat;
     IBOutlet UIButton *btnSubcat;
-    NSData *temoImageData;;
-    AppDelegate *app;
+    NSData *temoImageData;
     NSString *strExpDate;
     NSString *strCardExpDate;
     
     
   
+    IBOutlet UIView *viewContent;
     IBOutlet UILabel *lblLatShow;
     IBOutlet UILabel *lblLongShow;
     

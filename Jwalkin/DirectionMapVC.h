@@ -2,7 +2,7 @@
 //  DirectionMapVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 11/11/13.
+//  Created by Asai on 11/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
@@ -21,8 +21,8 @@
     AppDelegate *app;
     UIImageView *routeView;
 }
+@property (weak, nonatomic) IBOutlet UINavigationItem *navTitle;
 @property(nonatomic,strong)NSString *strTitle;
-@property(nonatomic,strong)IBOutlet UILabel *lblTitle;
 @property(nonatomic,strong)NSString *locationName;
 @property(nonatomic,retain)NSMutableArray *arrMapPoints;
 @property(nonatomic,strong)NSString *address;

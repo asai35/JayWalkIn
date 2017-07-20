@@ -2,12 +2,13 @@
 //  ViewController.m
 //  Jwalkin
 //
-//  Created by Kanika on 06/11/13.
+//  Created by Asai on 06/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
 #import "ViewController.h"
 #import "HomeVC.h"
+#import "MainScreenViewController.h"
 #import <CoreLocation/CoreLocation.h>
 #import "AppDelegate.h"
 #import "TutorialVC.h"
@@ -24,7 +25,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     count = 0;
     [[UINavigationBar appearance]setFrame:CGRectMake(0, 0, 320, 64)];
 
@@ -37,6 +37,7 @@
 
 -(void)viewWillAppear:(BOOL)animated
 {
+    count = 0;
     [self startUpdate];
 }
 
@@ -48,15 +49,15 @@
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations
 {
     CLLocation * currentlocation=[locations lastObject];
-    app.clLocation = currentlocation;
-    app.userNewLocatiion=currentlocation;
+    appdelegate().clLocation = currentlocation;
+    appdelegate().userNewLocatiion=currentlocation;
     [self stopUpdate];
 
     //NSLog(@"%f  %f",newLocation.coordinate.latitude,newLocation.coordinate.longitude);
     //NSLog(@"1:-  %f  %f",app.clLocation.coordinate.latitude,app.clLocation.coordinate.longitude);
-    if (app.clLocation.coordinate.latitude == 0.00000 && app.clLocation.coordinate.longitude == 0.00000)
+    if (appdelegate().clLocation.coordinate.latitude == 0.00000 && appdelegate().clLocation.coordinate.longitude == 0.00000)
     {
-        [self showAlert:@"JwalkIn" message:@"You have not allow to use your current location, you couldn't preoceed further" cancel:@"OK" other:nil];
+        [self showAlert:@"EmpowerMainStreet" message:@"You have not allow to use your current location, you couldn't preoceed further" cancel:@"OK" other:nil];
     }
     else
     {
@@ -71,17 +72,17 @@
 -(void)locationManager:(CLLocationManager *)manager didUpdateToLocation:(CLLocation *)newLocation
           fromLocation:(CLLocation *)oldLocation
 {
-    app.clLocation = newLocation;
-    app.userNewLocatiion=newLocation;
+    appdelegate().clLocation = newLocation;
+    appdelegate().userNewLocatiion=newLocation;
 
     [self stopUpdate];
     
     //NSLog(@"%f  %f",newLocation.coordinate.latitude,newLocation.coordinate.longitude);
     //NSLog(@"2:  %f  %f",app.clLocation.coordinate.latitude,app.clLocation.coordinate.longitude);
     
-    if (app.clLocation.coordinate.latitude == 0.00000 && app.clLocation.coordinate.longitude == 0.00000)
+    if (appdelegate().clLocation.coordinate.latitude == 0.00000 && appdelegate().clLocation.coordinate.longitude == 0.00000)
     {
-        [self showAlert:@"JwalkIn" message:@"You have not allow to use your current location, you couldn't preoceed further." cancel:@"OK" other:nil];
+        [self showAlert:@"EmpowerMainStreet" message:@"You have not allow to use your current location, you couldn't preoceed further." cancel:@"OK" other:nil];
     }
     else
     {
@@ -151,13 +152,16 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             
             TutorialVC *introVC = [[TutorialVC alloc] initWithNibName:@"TutorialVC" bundle:nil];
+//            [self.navigationController presentViewController:introVC animated:YES completion:nil];
             [self.navigationController presentViewController:introVC animated:YES completion:nil];
-            
+
            [[NSUserDefaults standardUserDefaults] setBool:YES forKey:@"hasIntroShown"];
           [[NSUserDefaults standardUserDefaults] synchronize];
         });
     }//Dp (23Dec)
-    HomeVC *home = [[HomeVC alloc] initWithNibName:@"HomeVC" bundle:nil];
+//    UINavigationController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"MainScreenNav"];//[[HomeVC alloc] initWithNibName:@"HomeVC" bundle:nil];
+//    [self presentViewController:home animated:YES completion:nil];
+    UIViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"mainVC"];
     [self.navigationController pushViewController:home animated:YES];
 }
 

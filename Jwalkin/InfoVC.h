@@ -2,7 +2,7 @@
 //  InfoVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 11/11/13.
+//  Created by Asai on 11/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 

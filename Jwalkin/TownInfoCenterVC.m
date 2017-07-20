@@ -2,7 +2,7 @@
 //  TownInfoCenterVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 11/06/15.
+//  Created by Asai on 11/06/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -68,14 +68,12 @@
         //http://198.57.247.185/~jwalkin/admin/api/getTownInfoCenterbillboards.php?lat=26&lng=73&radius=50
         netUtills = [[NetworkUtills alloc] initWithSelector:@selector(ParseResponse:) WithCallBackObject:self];
         NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-        //[dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.latitude] forKey:@"lat"];
-        //[dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.longitude] forKey:@"lng"];
-        [dict setValue:[NSString stringWithFormat:@"%f",26.2389469] forKey:@"lat"];
-        [dict setValue:[NSString stringWithFormat:@"%f",73.0243094] forKey:@"lng"];
+        [dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.latitude] forKey:@"lat"];
+        [dict setValue:[NSString stringWithFormat:@"%f",app.clLocation.coordinate.longitude] forKey:@"lng"];
 
         [dict setValue:@"50" forKey:@"radius"];
         netUtills.tag = 1;
-        [netUtills GetResponseByASIFormDataRequest:[NSString stringWithFormat:@"%@%@",mainUrl,getbiillboardntowncat] WithDictionary:dict];
+        [netUtills GetResponseByASIFormDataRequest:[NSString stringWithFormat:@"%@%@",mainUrl, getbiillboardntowncat] WithDictionary:dict];
     }
 
 }
@@ -106,7 +104,7 @@
             else
             {
                 NSString *str = [dict valueForKey:@"data"];
-                [self showAlert:@"Jaywalk.In" message:str cancel:@"OK" other:nil];
+                [self showAlert:@"Empower Main Street" message:str cancel:@"OK" other:nil];
                 return;
             }
         }
@@ -229,7 +227,7 @@
     if (arrMerchantDetail.count == 0)
     {
         [tblMerchant reloadData];
-        [self showAlert:@"Jaywalk.In" message:@"No Data Found" cancel:@"OK" other:nil];
+        [self showAlert:@"Empower Main Street" message:@"No Data Found" cancel:@"OK" other:nil];
     }
 //    picView.frame  = CGRectMake(0, 0, 320, 568);
 //    [UIView beginAnimations:nil context:NULL];

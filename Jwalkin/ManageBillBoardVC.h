@@ -2,7 +2,7 @@
 //  ManageBillBoardVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 11/06/15.
+//  Created by Asai on 11/06/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 #import "NetworkUtills.h"
@@ -63,7 +63,7 @@
 
 
 @property(nonatomic,strong)IBOutlet UIScrollView *scrl;
-@property(nonatomic,strong)IBOutlet UILabel *lblMName;
+//@property(nonatomic,strong)IBOutlet UILabel *lblMName;
 //@property(nonatomic,strong)NSString *strMName1;
 @property(nonatomic,strong)NSString *strMId;
 @property(nonatomic, strong)NSMutableArray *arrTempMerchantDetail;

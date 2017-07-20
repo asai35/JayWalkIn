@@ -2,7 +2,7 @@
 //  SocialShareUIView.m
 //  Jwalkin
 //
-//  Created by RichMan on 4/6/17.
+//  Created by Asai on 4/6/17.
 //  Copyright © 2017 fox. All rights reserved.
 //
 

@@ -2,7 +2,7 @@
 //  ManageBillBoardCoupanVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 17/07/15.
+//  Created by Asai on 17/07/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -50,7 +50,7 @@
     IBOutlet UILabel *lblExpiryStatus;
     IBOutlet UILabel *lblSetExpire;
     IBOutlet UILabel *lblInDays;
-    IBOutlet UILabel *lblMName;
+//    IBOutlet UILabel *lblMName;
     IBOutlet UILabel *lblSelectTown;
     
    

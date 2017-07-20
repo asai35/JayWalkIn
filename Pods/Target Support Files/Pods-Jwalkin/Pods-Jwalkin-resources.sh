@@ -78,7 +78,7 @@ EOM
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "FBSDKCoreKit/FacebookSDKStrings.bundle"
-  install_resource "SSKeychain/Support/SSKeychain.bundle"
+  install_resource "SAMKeychain/Support/SAMKeychain.bundle"
   install_resource "TwitterKit/iOS/TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle"
   install_resource "ZBarSDK/iphone/res/zbar-back.png"
   install_resource "ZBarSDK/iphone/res/zbar-help.html"
@@ -87,7 +87,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "FBSDKCoreKit/FacebookSDKStrings.bundle"
-  install_resource "SSKeychain/Support/SSKeychain.bundle"
+  install_resource "SAMKeychain/Support/SAMKeychain.bundle"
   install_resource "TwitterKit/iOS/TwitterKit.framework/Versions/A/Resources/TwitterKitResources.bundle"
   install_resource "ZBarSDK/iphone/res/zbar-back.png"
   install_resource "ZBarSDK/iphone/res/zbar-help.html"

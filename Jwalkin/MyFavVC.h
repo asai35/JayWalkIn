@@ -2,7 +2,7 @@
 //  MyFavVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 22/11/13.
+//  Created by Asai on 22/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 

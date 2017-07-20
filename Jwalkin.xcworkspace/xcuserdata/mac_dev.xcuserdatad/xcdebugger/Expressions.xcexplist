@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[UpdateProfileViewController viewDidLoad]:UpdateProfileViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "btnUpdate.frame">
+            </PersistentString>
+            <PersistentString
+               value = "btnUpdate.frame.origin.y + 100">
+            </PersistentString>
+            <PersistentString
+               value = "viewBusinessHours.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[UpdateProfileViewController btnUpdateClick]:UpdateProfileViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "app.selectedSubCat">
+            </PersistentString>
+            <PersistentString
+               value = "[arrStateId objectAtIndex:app.selectedState]">
+            </PersistentString>
+            <PersistentString
+               value = "tfWebLink.text">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "main:main.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[MainScreenViewController pickerDoneClicked:]:MainScreenViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.catId">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[UpdateProfileViewController niDropDownDelegateMethod:]:UpdateProfileViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "app.selectedSubCat">
+            </PersistentString>
+            <PersistentString
+               value = "app.selectedCat">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[UpdateProfileViewController tableView:numberOfRowsInSection:]:UpdateProfileViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[hoursArray count] + 1">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[UpdateProfileViewController tableView:cellForRowAtIndexPath:]:UpdateProfileViewController.m">
+      </ContextState>
+      <ContextState
+         contextName = "-[SubCategoriesVC pickerDoneClicked:]:SubCategoriesVC.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "app.clLocation.coordinate.latitude">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

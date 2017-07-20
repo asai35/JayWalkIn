@@ -2,7 +2,7 @@
 //  AppDelegate.h
 //  Jwalkin
 //
-//  Created by Kanika on 06/11/13.
+//  Created by Asai on 06/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //   com.jwalkin.jwalkin jwalkin alex  ((((((Distribution
 
@@ -11,8 +11,8 @@
 #import "CoreLocation/CoreLocation.h"
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
-
-@interface AppDelegate : UIResponder <UIApplicationDelegate,CLLocationManagerDelegate>
+#import <UserNotifications/UserNotifications.h>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, CLLocationManagerDelegate, UNUserNotificationCenterDelegate>
 
 @property (nonatomic,strong) CLLocationManager *locationManager;
 @property (nonatomic,strong)CLLocation *clLocation;
@@ -37,6 +37,9 @@
 //Manish
 @property (nonatomic,strong) NSMutableDictionary * dictUserInfoFB;
 @property (nonatomic,strong) NSMutableDictionary * dictUserInfoFB1;
+@property (nonatomic,strong) NSString * udid;
+@property (nonatomic,strong) NSString * strDeviceToken;
 
 
 @end
+AppDelegate *appdelegate(void);

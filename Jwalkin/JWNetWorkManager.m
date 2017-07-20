@@ -1,4 +1,10 @@
-
+//
+//  JWNetWorkManager.m
+//  Jwalkin
+//
+//  Created by Asai on 4/6/17.
+//  Copyright © 2017 fox. All rights reserved.
+//
 #import "JWNetWorkManager.h"
 #import "AFNetworking.h"
 typedef void(^URLCallback)(NSURLSessionDataTask* task, NSData* responseData, NSURLResponse* response, NSError* error);
@@ -156,8 +162,8 @@ typedef void(^URLCallback)(NSURLSessionDataTask* task, NSData* responseData, NSU
     progress:(ProgressHandler) progressComplition
   completion:(ResponseHandler) completion{
     __block NSURLSessionDataTask* task = [m_session dataTaskWithRequest:[self generateRequestWithQueryString:@"GET"
-                                                                                                        path:path
-                                                                                                        data:data]
+                                                                                                        path: path
+                                                    data:data]
                                                       completionHandler:
                                           ^(NSData* responseData, NSURLResponse* response, NSError* error) {
                                               self.urlCallback(task, responseData, response, error);
@@ -246,7 +252,7 @@ typedef void(^URLCallback)(NSURLSessionDataTask* task, NSData* responseData, NSU
 
 - (NSURLRequest*) generateRequestWithFormData:(NSString*)method path:(NSString*)path data:(NSDictionary*)data{
     
-    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] multipartFormRequestWithMethod:method URLString:[NSString stringWithFormat:@"%@%@/?a", mainUrl, path] parameters:nil constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+    NSMutableURLRequest *request = [[AFJSONRequestSerializer serializer] multipartFormRequestWithMethod:method URLString:[NSString stringWithFormat:@"%@%@/?a", mainUrl, path] parameters:data constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         for (NSString *key in [data allKeys]) {
             NSObject *obj = data[key];
             if ([key isEqualToString:@"image"]) {
@@ -265,7 +271,11 @@ typedef void(^URLCallback)(NSURLSessionDataTask* task, NSData* responseData, NSU
                 NSArray *arrFileType = [arr objectForKey:@"type"];
                 for (int i = 0; i <arrData.count; i++)
                 {
-                    [formData appendPartWithFileData:[arrData objectAtIndex:i] name:[arrFileName objectAtIndex:i] fileName:@"Photo.mp4" mimeType:[arrFileType objectAtIndex:i]];
+                    if ([[arrFileType objectAtIndex:i] isEqualToString:@"video/quicktime"]) {
+                        [formData appendPartWithFileData:[arrData objectAtIndex:i] name:[arrFileName objectAtIndex:i] fileName:@"Photo.mov" mimeType:[arrFileType objectAtIndex:i]];
+                    }else{
+                        [formData appendPartWithFileData:[arrData objectAtIndex:i] name:[arrFileName objectAtIndex:i] fileName:@"Photo.mp4" mimeType:[arrFileType objectAtIndex:i]];
+                    }
                 }
                 
             }else if([key isEqualToString:@"images"]){

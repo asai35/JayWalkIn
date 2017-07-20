@@ -2,7 +2,7 @@
 //  CouponVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 12/11/13.
+//  Created by Asai on 12/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
@@ -13,8 +13,9 @@
 #import "MBProgressHUD.h"
 #import <MediaPlayer/MediaPlayer.h>
 #import "RemoteImageView.h"
+#import "ZBarSDK.h"
 
-@interface CouponVC : UIViewController<UIScrollViewDelegate,UIWebViewDelegate,UIGestureRecognizerDelegate>
+@interface CouponVC : UIViewController<UIScrollViewDelegate,UIWebViewDelegate,UIGestureRecognizerDelegate, ZBarReaderDelegate>
 {
     IBOutlet UIPageControl *pgCtrl;
     
@@ -26,7 +27,6 @@
     float oldoffset_y;
     
     NetworkUtills *netUtills;
-    AppDelegate *app;
     WrapperClass *wrpr;
     MBProgressHUD *progressView;
 
@@ -52,14 +52,13 @@
     IBOutlet UIButton *btnCall;
     IBOutlet UIButton *btnFavBottom;
     IBOutlet UIButton *btnDirection;
-    IBOutlet UIButton *btnBack;
-    IBOutlet UIButton *btnCheckIn;
     
     IBOutlet UIButton *btnRateRed;
     IBOutlet UIButton *btnRateYellow;
     IBOutlet UIButton *btnRateGreen;
     IBOutlet UIButton *btnLikeBillBoard;
     
+    IBOutlet UILabel *lblBusinessHours;
     //Chanchal
     
     int imagecount;
@@ -77,14 +76,33 @@
     IBOutlet UIView *viewInfo;
     MPMoviePlayerController *moviePlayer;
     
-    IBOutlet UIButton *btnComment;
     IBOutlet UIButton *btnOffer;
     IBOutlet UIButton *btn_back;
 
     IBOutlet UIImageView *imgViewBackImg;
     NSString *ImagLinkStr;
+    IBOutlet UILabel *lblPreMerchant;
+    IBOutlet UILabel *lblNextMerchant;
+    IBOutlet UIView *viewPrev;
+    IBOutlet UIView *viewNext;
     
+    IBOutlet UIView *viewsubPunch;
+    IBOutlet UIView *viewPunch;
+    IBOutlet UITableView *tbl_punch;
+    IBOutlet UILabel *lblPunchTitle;
+    IBOutlet UIButton *btnPunch;
+    IBOutlet UIImageView *viewpunchback;
+    
+    
+    IBOutlet UIView *scanView;
+    ZBarReaderViewController *reader;
+    NSString *resultText;
+    NSString *name;
+    NSString *strOfferId;
+
 }
+- (IBAction)ActionBtnPunch:(id)sender;
+@property (weak, nonatomic) IBOutlet UINavigationItem *navTitle;
 -(IBAction)btnBackMediaPlayerClick:(id)sender;
 -(IBAction)btnCommentClick:(id)sender;
 -(IBAction)btnOfferClicked:(id)sender;
@@ -93,7 +111,6 @@
 @property(nonatomic,strong)IBOutlet UIButton *btnInfo;
 @property(nonatomic,strong)IBOutlet UIButton *btnFav;
 @property(nonatomic,strong)IBOutlet UIScrollView *scrl;
-@property(nonatomic,strong)IBOutlet UILabel *lblMName;
 @property(nonatomic,strong)NSString *strMName;
 @property(nonatomic,strong)NSString *strMId;
 @property(nonatomic, strong)NSMutableArray *arrTempMerchantDetail;

@@ -2,13 +2,11 @@
 //  RegisterMerchantVC.m
 //  Jwalkin
 //
-//  Created by Chanchal Warde on 5/14/15.
+//  Created by Asai on 5/14/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
 #import "RegisterMerchantVC.h"
-//#import "AFHTTPClient.h"
-//#import "AFImageRequestOperation.h"
 #import "AFNetworking.h"
 #import "UrlFile.h"
 #import "BillBoardVC.h"
@@ -31,7 +29,6 @@
     strCardExpDate = @"";
      mapView.showsUserLocation = YES;
      temoImageData = UIImagePNGRepresentation([UIImage imageNamed:@"img_add_photos"]);
-    app = (AppDelegate*)[UIApplication sharedApplication].delegate;
     scrollReg.contentSize  = CGSizeMake(self.view.frame.size.width,btnRegister.frame.origin.y+btnRegister.frame.size.height+10);
     
     whitespace = [NSCharacterSet whitespaceAndNewlineCharacterSet];
@@ -141,26 +138,26 @@
             NSMutableArray *imageArray = [[NSMutableArray alloc ]init];
             NSMutableArray *imageNameArray = [[NSMutableArray alloc]init];
             NSString *documentsDirectory = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
-            NSString *imageNameLogo = [NSString stringWithFormat:@"image_%d.png",app.imageNo];
+            NSString *imageNameLogo = [NSString stringWithFormat:@"image_%d.png",appdelegate().imageNo];
             NSString *filePath = [documentsDirectory stringByAppendingPathComponent:imageNameLogo];
             NSData *imageDataLogo = UIImagePNGRepresentation(imgviewLogo.image);
             [imageDataLogo writeToFile:filePath atomically:YES];
-            app.imageNo ++;
+            appdelegate().imageNo ++;
             [imageArray addObject:imageDataLogo];
             [imageNameArray addObject:@"logo"];
             NSString *filePathDP;
             if(![UIImagePNGRepresentation(imgviewLogo.image) isEqual:temoImageData] ||  UIImagePNGRepresentation(imgviewLogo.image) !=nil)
             {
-                NSString *imageNameDP = [NSString stringWithFormat:@"image_%d.png",app.imageNo];
+                NSString *imageNameDP = [NSString stringWithFormat:@"image_%d.png",appdelegate().imageNo];
                 filePathDP = [documentsDirectory stringByAppendingPathComponent:imageNameDP];
                 NSData *imageDataDP = UIImagePNGRepresentation(imgviewDP.image);
-                app.imageNo ++;
+                appdelegate().imageNo ++;
                 [imageDataDP writeToFile:filePathDP atomically:YES];
                 [imageArray addObject:imageDataDP];
                 [imageNameArray addObject:@"image"];
             }
             [self setData];
-            NSString *catId =[arrCatId objectAtIndex:app.selectedCat];
+            NSString *catId =[arrCatId objectAtIndex:appdelegate().selectedCat];
 //            if ([catId isEqualToString:@"8"])
 //            {
 //                catId = @"10";
@@ -173,12 +170,12 @@
                                           @"address1": tfAdd1.text,
                                           @"address2": tfAdd2.text,
                                           @"city": tfCity.text,
-                                          @"state": [arrStateId objectAtIndex:app.selectedState],
+                                          @"state": [arrStateId objectAtIndex:appdelegate().selectedState],
                                           @"country": @"USA",
                                           @"zipcode": tfZipcode.text,
                                           @"phoneno" : tfPhNO.text,
                                           @"category":catId,
-                                          @"subcategory": [NSString stringWithFormat:@"%d", app.selectedSubCat ],
+                                          @"subcategory": [NSString stringWithFormat:@"%d", appdelegate().selectedSubCat ],
                                           @"latitute":lblLatitute.text ,
                                           @"longitute":lblLongitute.text ,
                                           @"business_hours": tfBusinesshour.text,
@@ -193,9 +190,9 @@
                                           @"promo":@"",
                                           }];
             [parameters setObject:@{@"data":imageArray, @"name":imageNameArray} forKey:@"images"];
-            [app showHUD];
+            [appdelegate() showHUD];
             [[JWNetWorkManager sharedManager] POST:@"add_merchant.php" data:parameters completion:^(id data, NSError *error) {
-                [app hideHUD];
+                [appdelegate() hideHUD];
                 if (error) {
                     NSLog(@"Error: %@", error);
                 } else {
@@ -327,17 +324,17 @@
         [self showAlert:@"Alert" message:@"Please enter your first address." cancel:@"OK" other:nil];
         return NO;
     }
-    else if ([app.selectedStateName stringByTrimmingCharactersInSet:whitespace].length == 0 && [[app.selectedStateName stringByTrimmingCharactersInSet:whitespace] isEqualToString:@""])
+    else if ([appdelegate().selectedStateName stringByTrimmingCharactersInSet:whitespace].length == 0 && [[appdelegate().selectedStateName stringByTrimmingCharactersInSet:whitespace] isEqualToString:@""])
     {
         [self showAlert:@"Alert" message:@"Please select state." cancel:@"OK" other:nil];
         return NO;
     }
-    else if ([app.selectedCatName stringByTrimmingCharactersInSet:whitespace].length == 0 && [[app.selectedCatName stringByTrimmingCharactersInSet:whitespace] isEqualToString:@""])
+    else if ([appdelegate().selectedCatName stringByTrimmingCharactersInSet:whitespace].length == 0 && [[appdelegate().selectedCatName stringByTrimmingCharactersInSet:whitespace] isEqualToString:@""])
     {
         [self showAlert:@"Alert" message:@"Please select catagory." cancel:@"OK" other:nil];
         return NO;
     }
-    else if ([app.selectedSubcatName stringByTrimmingCharactersInSet:whitespace].length == 0 && [[app.selectedSubcatName stringByTrimmingCharactersInSet:whitespace] isEqualToString:@""])
+    else if ([appdelegate().selectedSubcatName stringByTrimmingCharactersInSet:whitespace].length == 0 && [[appdelegate().selectedSubcatName stringByTrimmingCharactersInSet:whitespace] isEqualToString:@""])
     {
         [self showAlert:@"Alert" message:@"Please select sub-catagory." cancel:@"OK" other:nil];
         return NO;
@@ -583,7 +580,7 @@
     }
     UIButton *btnSCat = (UIButton *)sender;
     CGFloat f = 150;
-    NSMutableArray *arrTemp = [dictSubcategory valueForKey:app.selectedCatName];
+    NSMutableArray *arrTemp = [dictSubcategory valueForKey:appdelegate().selectedCatName];
     if(dropDown3 == nil)
     {
         dropDown3 = [[NIDropDown alloc]showDropDown:btnSCat height:&f arr:arrTemp imgArr:nil direction:@"down"];
@@ -610,9 +607,9 @@
     }
     if (sender.tag ==103)
     {
-        NSDictionary *dictCat=[arrMain objectAtIndex:app.selectedCat];
+        NSDictionary *dictCat=[arrMain objectAtIndex:appdelegate().selectedCat];
         NSArray *subCat =[dictCat valueForKey:@"subcategory_info"];
-        app.selectedSubCat=[[[subCat objectAtIndex:app.selectedSubCat] objectForKey:@"subcategoryid"] intValue];
+        appdelegate().selectedSubCat=[[[subCat objectAtIndex:appdelegate().selectedSubCat] objectForKey:@"subcategoryid"] intValue];
         dropDown3=nil;
     }
 }

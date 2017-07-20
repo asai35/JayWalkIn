@@ -19,6 +19,11 @@
 @property (nonatomic, copy, readonly) NSString *name;
 
 /**
+ *  The URL of the board
+ */
+@property (nonatomic, copy, readonly) NSURL *url;
+
+/**
  *  Description of the board
  */
 @property (nonatomic, copy, readonly) NSString *descriptionText;
@@ -27,6 +32,11 @@
  *  The user that created this board
  */
 @property (nonatomic, strong, readonly) PDKUser *creator;
+
+/**
+  * The board's privacy setting: "public" or "private"
+  */
+@property (nonatomic, strong, readonly) NSString *privacy;
 
 /**
  *  Number of users that follow this board

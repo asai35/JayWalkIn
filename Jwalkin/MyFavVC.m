@@ -2,7 +2,7 @@
 //  MyFavVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 22/11/13.
+//  Created by Asai on 22/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
@@ -25,15 +25,6 @@
 
 @implementation MyFavVC
 @synthesize lblCouponMName,lblCouponMAddress,lblPercentage,lblTotalWalkin;
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -81,7 +72,7 @@
     else
     {
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"No Data Found." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"No Data Found." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
             [self.navigationController popViewControllerAnimated:YES];
         }];
@@ -229,7 +220,7 @@
 -(IBAction)MakeACall:(id)sender
 {
     UIAlertController *alert = [[UIAlertController alloc] init];
-    alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Call local business?" preferredStyle:UIAlertControllerStyleAlert];
+    alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Call local business?" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
             NSMutableDictionary *dic_K = [arrMerchantDetail objectAtIndex:merchantTag];
             NSString * phoneNumber = [NSString stringWithFormat:@"tel://%@",[dic_K valueForKey:@"Phoneno"]];
@@ -250,7 +241,7 @@
 -(IBAction)ShowMeDirections:(id)sender
 {
     NSMutableDictionary *dic_K = [arrMerchantDetail objectAtIndex:merchantTag];
-    DirectionMapVC *direction = [[DirectionMapVC alloc] initWithNibName:@"DirectionMapVC" bundle:nil];
+    DirectionMapVC *direction = [self.storyboard instantiateViewControllerWithIdentifier:@"DirectionMapVC"];//[[DirectionMapVC alloc] initWithNibName:@"DirectionMapVC" bundle:nil];
     direction.address = [dic_K valueForKey:@"merchant_address"];
     direction.strTitle = [dic_K valueForKey:@"merchant_name"];
     [self.navigationController pushViewController:direction animated:YES];
@@ -259,16 +250,19 @@
 -(IBAction)ShowCoupons:(id)sender
 {
     NSMutableDictionary *dic_K = [arrMerchantDetail objectAtIndex:merchantTag];
-    CouponVC *c = [[CouponVC alloc] initWithNibName:@"CouponVC" bundle:nil];
+    CouponVC *c = (CouponVC*)[self.storyboard instantiateViewControllerWithIdentifier:@"CouponVC"];
     c.strMName = [dic_K valueForKey:@"merchant_name"];
     c.strMId = [dic_K valueForKey:@"merchant_id"];
+    c.tempMerchantTag = currentCounter - 1;
+    c.arrTempMerchantDetail = arrMerchantDetail;
     [self.navigationController pushViewController:c animated:YES];
 }
 
 -(IBAction)ShowAllLocations:(id)sender
 {
-    ShowLocationsVC *direction = [[ShowLocationsVC alloc] initWithNibName:@"ShowLocationsVC" bundle:nil];
+    ShowLocationsVC *direction = (ShowLocationsVC*)[self.storyboard instantiateViewControllerWithIdentifier:@"ShowLocationsVC"];//[[ShowLocationsVC alloc] initWithNibName:@"ShowLocationsVC" bundle:nil];
     direction.arrMapPoints = arrMerchantDetail;
+    direction.strTitle = @"Favorite";
     [self.navigationController pushViewController:direction animated:YES];
 }
 
@@ -281,7 +275,7 @@
         {
             [self getfavoritelist];
             [subView removeFromSuperview];
-            [self showAlert:@"Jaywalk.In" message:@"Removed from favotites." cancel:@"OK" other:nil];
+            [self showAlert:@"Empower Main Street" message:@"Removed from favotites." cancel:@"OK" other:nil];
         }
     }
 }
@@ -306,8 +300,7 @@
     {
         wrpr = [[WrapperClass alloc] initwithDev];
         arrMerchantDetail = [[NSMutableArray alloc] init];
-        AppDelegate *app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
-        app.isFromFav = 1;
+        appdelegate().isFromFav = 1;
         NSMutableArray *arrIDs = [wrpr GetIds];
         NSString *allids = [arrIDs componentsJoinedByString:@","];
         netUtills = [[NetworkUtills alloc] initWithSelector:@selector(ParseResponse:) WithCallBackObject:self];

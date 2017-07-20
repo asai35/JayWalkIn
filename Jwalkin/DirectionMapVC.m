@@ -2,7 +2,7 @@
 //  DirectionMapVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 11/11/13.
+//  Created by Asai on 11/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
@@ -16,7 +16,7 @@
 
 @implementation DirectionMapVC
 
-@synthesize mapLat,mapLong,address,arrMapPoints,locationName,lblTitle,strTitle, coordinate;
+@synthesize mapLat,mapLong,address,arrMapPoints,locationName,strTitle, coordinate;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -30,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    lblTitle.text =self.strTitle;
+    _navTitle.title =self.strTitle;
     app = (AppDelegate *)[[UIApplication sharedApplication] delegate];
     av.hidden = NO;
     [av startAnimating];
@@ -59,10 +59,10 @@
              {
                  CLPlacemark *placemark = [placemarks objectAtIndex:0];
                  CLLocation *location = placemark.location;
-                 CLLocationCoordinate2D coordinate = location.coordinate;
+                 CLLocationCoordinate2D coordinates = location.coordinate;
                  //NSString *myadd=add_annSubtitle;
-                 NSNumber *lat = [NSNumber numberWithDouble:coordinate.latitude];
-                 NSNumber *lon = [NSNumber numberWithDouble:coordinate.longitude];
+                 NSNumber *lat = [NSNumber numberWithDouble:coordinates.latitude];
+                 NSNumber *lon = [NSNumber numberWithDouble:coordinates.longitude];
                  NSDictionary *userLocation=@{@"lat":lat,@"long":lon,@"title":loc_annTitle,@"subTitle":add_annSubtitle};
                  [self performSelectorOnMainThread:@selector(Called:) withObject:userLocation waitUntilDone:YES];
              }
@@ -80,10 +80,8 @@
     span.latitudeDelta=0.2;
     span.longitudeDelta=0.2;
     CLLocationCoordinate2D CurrentLoc;
-	//CurrentLoc.latitude= app.clLocation.coordinate.latitude;
-	//CurrentLoc.longitude= app.clLocation.coordinate.longitude;
-    CurrentLoc.latitude= 26.2389469;
-    CurrentLoc.longitude= 73.0243094;
+	CurrentLoc.latitude= app.clLocation.coordinate.latitude;
+	CurrentLoc.longitude= app.clLocation.coordinate.longitude;
 	[self showRouteFrom:CurrentLoc to:location1];
 }
 
@@ -291,10 +289,8 @@
     toLoc.latitude = mapView2.annotation.coordinate.latitude;
     toLoc.longitude = mapView2.annotation.coordinate.longitude;
     CLLocationCoordinate2D CurrentLoc;
-	//CurrentLoc.latitude= app.clLocation.coordinate.latitude;
-	//CurrentLoc.longitude= app.clLocation.coordinate.longitude;
-    CurrentLoc.latitude= 26.2389469;
-    CurrentLoc.longitude= 73.0243094;
+	CurrentLoc.latitude= app.clLocation.coordinate.latitude;
+	CurrentLoc.longitude= app.clLocation.coordinate.longitude;
 
 }
 

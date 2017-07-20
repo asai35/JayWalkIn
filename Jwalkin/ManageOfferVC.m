@@ -2,7 +2,7 @@
 //  ManageOfferVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 22/07/15.
+//  Created by Asai on 22/07/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -18,7 +18,9 @@
 #import "SignupVC.h"
 
 @interface ManageOfferVC ()
-
+{
+    ZBarReaderViewController *codeReader;
+}
 @end
 
 @implementation ManageOfferVC
@@ -71,7 +73,7 @@
 
 -(IBAction)btnAddOfferClicked:(id)sender
 {
-    AddOfferVC *addOffer =[[AddOfferVC alloc]initWithNibName:@"AddOfferVC" bundle:nil];
+    AddOfferVC *addOffer = [self.storyboard instantiateViewControllerWithIdentifier:@"AddOfferVC"];
     [self.navigationController pushViewController:addOffer animated:YES];
 }
 
@@ -85,9 +87,9 @@
     else if(str.length == 0)
     {
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Sorry! you are not Login. You want to login with facebook?" preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Sorry! you are not Login. You want to login with facebook?" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
-                SignupVC *signup = [[SignupVC alloc] initWithNibName:@"SignupVC" bundle:nil];
+            SignupVC *signup = [self.storyboard instantiateViewControllerWithIdentifier: @"SignupVC"];//[[SignupVC alloc] initWithNibName:@"SignupVC" bundle:nil];
                 [self.navigationController pushViewController:signup animated:YES];
             
         }];
@@ -109,6 +111,36 @@
 -(IBAction)btnCancelClicked:(id)sender
 {
     [viewDetail removeFromSuperview];
+}
+
+- (IBAction)btnRedeem:(id)sender {
+    NSString *str =[[NSUserDefaults standardUserDefaults] valueForKey:@"fbname"];
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"loggedin"])
+    {
+        [self scanCode];
+    }
+    else if(str.length == 0)
+    {
+        UIAlertController *alert = [[UIAlertController alloc] init];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Sorry! you are not Login. You want to login with facebook?" preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            SignupVC *signup = [self.storyboard instantiateViewControllerWithIdentifier: @"SignupVC"];//[[SignupVC alloc] initWithNibName:@"SignupVC" bundle:nil];
+            [self.navigationController pushViewController:signup animated:YES];
+            
+        }];
+        [alert addAction:btn_ok];
+        UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:^{
+            }];
+            
+        }];
+        [alert addAction:btn_cancel];
+        [self presentViewController:alert animated:YES completion:nil];
+    }
+    else
+    {
+        [self scanCode];
+    }
 }
 
 #pragma mark- TableView Delegates
@@ -165,7 +197,7 @@
     }
     else
     {
-        AddOfferVC *addOffer =[[AddOfferVC alloc]initWithNibName:@"AddOfferVC" bundle:nil];
+        AddOfferVC *addOffer = [self.storyboard instantiateViewControllerWithIdentifier:@"AddOfferVC"];//[[AddOfferVC alloc]initWithNibName:@"AddOfferVC" bundle:nil];
         NSDictionary *dict = [arrOffers objectAtIndex:indexPath.row];
         addOffer.dictOffer = dict;
         addOffer.isUpdate = YES;
@@ -229,7 +261,7 @@
             {
                 NSString *msg = [NSString stringWithFormat:@"%@",[resDic valueForKey:@"data"]];
                 UIAlertController *alert = [[UIAlertController alloc] init];
-                alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:msg preferredStyle:UIAlertControllerStyleAlert];
+                alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:msg preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                         [self.navigationController popViewControllerAnimated:YES];
                     
@@ -241,7 +273,7 @@
             else
             {
                 NSString *msg = [NSString stringWithFormat:@"%@",[resDic valueForKey:@"data"]];
-                [self showAlert:@"Jaywalk.In" message:msg cancel:@"OK" other:nil];
+                [self showAlert:@"Empower Main Street" message:msg cancel:@"OK" other:nil];
                 return;
  
             }
@@ -297,7 +329,7 @@
     {
         //NSString *msg = [resDic valueForKey:@""];
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"You got this offer" preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"You got this offer" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 [viewDetail removeFromSuperview];
         }];
@@ -308,7 +340,7 @@
     {
         //NSString *msg = [resDic valueForKey:@""];
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"You redeem is locked you want to reset your redeem?" preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"You redeem is locked you want to reset your redeem?" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 [self callResetRedeamApi];
         }];
@@ -365,7 +397,7 @@
     if ([sts isEqualToString:@"1"])
     {
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Your redeem is updated successfully." preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Your redeem is updated successfully." preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 [viewDetail removeFromSuperview];
         }];
@@ -382,10 +414,10 @@
    // NSLog(@"Scanning..");
     //resultTextView.text = @"Scanning..";
     
-    ZBarReaderViewController *codeReader = [ZBarReaderViewController new];
+    codeReader = [ZBarReaderViewController new];
     codeReader.readerDelegate=self;
     codeReader.supportedOrientationsMask = ZBarOrientationMaskAll;
-    
+    [self.scanView setFrame:self.view.frame];
     [codeReader setCameraOverlayView:self.scanView];
     
     ZBarImageScanner *scanner = codeReader.scanner;
@@ -424,12 +456,13 @@
         {
             if ([strMidd isEqualToString:strMid])
             {
+                [codeReader dismissViewControllerAnimated:YES completion:nil];
                 [self callRedeamApi];
             }
             else
             {
                 UIAlertController *alert = [[UIAlertController alloc] init];
-                alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"QR image is not match with this offer." preferredStyle:UIAlertControllerStyleAlert];
+                alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"QR image is not match with this offer." preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                         [viewDetail removeFromSuperview];
                 }];

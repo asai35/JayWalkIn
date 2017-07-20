@@ -7,8 +7,8 @@
 //
 
 #import "ImageWebViewController.h"
-
-@interface ImageWebViewController ()
+#import "MBProgressHUD.h"
+@interface ImageWebViewController ()<UIWebViewDelegate>
 
 @end
 
@@ -22,11 +22,16 @@
     {
         return;
     }
-    NSURL *url = [NSURL URLWithString:fullURL];
+    NSURL *url;
+
+    if ([fullURL hasPrefix:@"http://"] || [fullURL hasPrefix:@"https://"]) {
+        url = [NSURL URLWithString:fullURL];
+    }else{
+        url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@", fullURL]];
+    }
     
     NSURLRequest *requestObj = [NSURLRequest requestWithURL:url];
     [self.wbImgLinkopen loadRequest:requestObj];
-
 
 }
 
@@ -49,4 +54,53 @@
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+-(void)webViewDidStartLoad:(UIWebView *)webView{
+    [self showHUD];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView{
+    [self hideHUD];
+}
+
+-(void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error{
+    [self hideHUD];
+    [self showAlert:@"Error" message:[NSString stringWithFormat:@"%@", error] cancel:@"Cancel" other:nil];
+}
+
+- (void)showAlert:(NSString *)title message:(NSString *)message cancel:(NSString *)cancel other:(NSString *)other{
+    UIAlertController *alert = [[UIAlertController alloc] init];
+    alert = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    if (cancel) {
+        UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:cancel style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+        }];
+        [alert addAction:btn_ok];
+    }
+    if (other) {
+        UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:other style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
+            [alert dismissViewControllerAnimated:YES completion:^{
+                
+            }];
+            
+        }];
+        [alert addAction:btn_cancel];
+    }
+    [self presentViewController:alert animated:YES completion:nil];
+    
+}
+-(void)showHUD
+{
+    [MBProgressHUD showHUDAddedTo:self.wbImgLinkopen animated:YES];
+}
+
+-(void)hideHUD
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [MBProgressHUD hideHUDForView:self.wbImgLinkopen animated:YES];
+    });
+}
+
 @end

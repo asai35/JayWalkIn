@@ -13,7 +13,7 @@ target 'Jwalkin' do
     pod 'FBSDKLoginKit'
     pod 'FBSDKShareKit'
     pod 'InstagramKit'
-    pod 'PinterestSDK'
+    pod 'PinterestSDK', :git => "https://github.com/pinterest/ios-pdk.git"
     pod 'ASIHTTPRequest'
     pod 'RegexKitLite'
     pod 'MBProgressHUD'
@@ -22,7 +22,10 @@ target 'Jwalkin' do
     pod 'KGModal'
     pod 'ZBarSDK'
     pod 'CrittercismSDK'
-
+    pod 'AFNetworking'
+    pod 'APAvatarImageView'
+    pod 'MaterialDesignCocoa'
+    pod 'STTwitter'
 #  target 'JwalkinTests' do
 #    inherit! :search_paths
 #    # Pods for testing

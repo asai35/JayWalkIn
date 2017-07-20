@@ -2,7 +2,7 @@
 //  SubCatCell.h
 //  Jwalkin
 //
-//  Created by Kanika on 08/11/13.
+//  Created by Asai on 08/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 

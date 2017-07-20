@@ -2,7 +2,7 @@
 //  HomeVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 06/11/13.
+//  Created by Asai on 06/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
@@ -15,7 +15,7 @@
 
     NSMutableArray *mainArray;
     
-    IBOutlet UIScrollView *scrl;
+//    IBOutlet UIScrollView *scrl;
     
     UITapGestureRecognizer *tap;
     

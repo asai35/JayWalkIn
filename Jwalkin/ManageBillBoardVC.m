@@ -2,7 +2,7 @@
 //  ManageBillBoardVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 11/06/15.
+//  Created by Asai on 11/06/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -13,7 +13,7 @@
 #import "UIImageView+WebCache.h"
 #import "Reachability.h"
 #import "ManageBillBoardCoupanVC.h"
-
+#import "RegexKitLite.h"
 
 @interface ManageBillBoardVC ()
 {
@@ -25,7 +25,7 @@
 @end
 
 @implementation ManageBillBoardVC
-@synthesize scrl,lblMName,strMId;
+@synthesize scrl,strMId;
 @synthesize arrTempMerchantDetail;
 @synthesize tempMerchantTag;
 
@@ -91,7 +91,7 @@
     }
     else
     {
-        lblMName.text = [[NSUserDefaults standardUserDefaults]valueForKey:@"merchantName"];
+        [self setTitle:[[NSUserDefaults standardUserDefaults]valueForKey:@"merchantName"]];
         netUtills = [[NetworkUtills alloc] initWithSelector:@selector(ParseResponseGetBill:) WithCallBackObject:self];
         netUtills.tag = 1;
         strMId= [[NSUserDefaults standardUserDefaults]valueForKey:@"merchantid"];
@@ -444,7 +444,7 @@
                     img.userInteractionEnabled=YES;
                 }
             }
-            if ([[dataDictionary valueForKey:@"BillboardType"] isEqualToString:@"Event"])
+            if ([[dataDictionary valueForKey:@"BillboardType"] isEqualToString:@"Event1"])
             {
                 view1.tag=3;
                 lblTitle.text = [dataDictionary valueForKey:@"Title"];
@@ -586,6 +586,173 @@
                     img.userInteractionEnabled=YES;
                 }
             }
+            if ([[dataDictionary valueForKey:@"BillboardType"] isEqualToString:@"News"] || [[dataDictionary valueForKey:@"BillboardType"] isEqualToString:@"Deal"] || [[dataDictionary valueForKey:@"BillboardType"] isEqualToString:@"Event"] || [[dataDictionary valueForKey:@"BillboardType"] isEqualToString:@"Website"])
+            {
+                view1.tag=9;
+                lblTitle.text = [dataDictionary valueForKey:@"Title"];
+                NSString *strSt =[dataDictionary valueForKey:@"Billboard_status"];
+                if ([strSt isEqualToString:@"expire"])
+                {
+                    lblStatus.textColor =[UIColor redColor];
+                    lblStatus.text =@"Expired";
+                }
+                else
+                {
+                    lblStatus.textColor=[UIColor greenColor];
+                    lblStatus.text =@"Active";
+                }
+                UIWebView *web;
+                UITextView *wb;
+                if ([[dataDictionary valueForKey:@"BillboardType"] isEqualToString:@"Website"]) {
+                    web = [[UIWebView alloc] initWithFrame:CGRectMake(5, lblTitle.frame.size.height + 15, view1.frame.size.width-5, view1.frame.size.height-80)];
+                    web.backgroundColor = [UIColor whiteColor];
+                    web.opaque=NO;
+                    web.delegate = self;
+                    //[wb loadHTMLString:[NSString stringWithFormat:@"<html><body text=\"#FFFFFF\">%@</body></html>",[[dataDictionary valueForKey:@"social"] valueForKey:@"url"]] baseURL:nil];
+                    NSArray *urls = [[dataDictionary valueForKey:@"Description"] componentsMatchedByRegex:@"http://[^\\s]*"];
+                    NSArray *urls1= [[dataDictionary valueForKey:@"Description"] componentsMatchedByRegex:@"https://[^\\s]*"];
+                    NSArray *urltext = [[dataDictionary valueForKey:@"Description"] componentsMatchedByRegex:@"[^\\s]*"];
+                    NSURL *url;
+                    if (urltext.count != 0) {
+                        url = [NSURL URLWithString:[NSString stringWithFormat:@"https://%@",urltext[0]]];
+                    }else if(urls.count != 0){
+                        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",urls[0]]];
+                    }else if(urls1.count != 0){
+                        url = [NSURL URLWithString:[NSString stringWithFormat:@"%@",urls1[0]]];
+                    }
+                    [web loadRequest:[NSURLRequest requestWithURL:url]];
+                    [arrBtnTitle addObject:@""];
+
+                }else{
+                    if (![[NSString stringWithFormat:@"%@",[[dataDictionary valueForKey:@"Image"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@""]  && ![[NSString stringWithFormat:@"%@",[[dataDictionary valueForKey:@"Video_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@""])
+                    {
+                        if (mainScreen.size.height == 480)
+                        {
+                            wb = [[UITextView alloc] initWithFrame:CGRectMake(5, lblTitle.frame.size.height, view1.frame.size.width-10, 80)];
+                        }
+                        else
+                        {
+                            wb = [[UITextView alloc] initWithFrame:CGRectMake(5, lblTitle.frame.size.height+10, view1.frame.size.width-10, 100)];
+                        }
+                    }
+                    else if (![[NSString stringWithFormat:@"%@",[[dataDictionary valueForKey:@"Image"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@""]  || ![[NSString stringWithFormat:@"%@",[[dataDictionary valueForKey:@"Video_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@""])
+                    {
+                        wb = [[UITextView alloc] initWithFrame:CGRectMake(5, lblTitle.frame.size.height+10, view1.frame.size.width-10, 70)];
+                    }
+                    else
+                    {
+                        wb = [[UITextView alloc] initWithFrame:CGRectMake(5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-80)];
+                    }
+                    wb.text = [dataDictionary valueForKey:@"Description"];
+                    wb.backgroundColor = [UIColor clearColor];
+                    wb.opaque=NO;
+                    wb.textColor =[UIColor whiteColor];
+                    wb.font = [UIFont systemFontOfSize:16.0];
+                    wb.userInteractionEnabled =YES;
+                    wb.editable = NO;
+                    wb.scrollEnabled = YES;
+                }
+                
+                //[wb loadHTMLString:[NSString stringWithFormat:@"<html><body text=\"#FFFFFF\">%@</body></html>",[dataDictionary valueForKey:@"Description"]] baseURL:nil];
+                btnEdit = [[UIButton alloc]init];
+                btnEdit.frame=CGRectMake(7, view1.frame.size.height-43, view1.frame.size.width-10, 43);
+                [btnEdit setImage:[UIImage imageNamed:@"btn_edit"] forState:UIControlStateNormal];
+                btnEdit.userInteractionEnabled = YES;
+                btnEdit.layer.cornerRadius = 5.0;
+                [btnEdit addTarget:self action:@selector(btnEditClicked:) forControlEvents:UIControlEventTouchUpInside];
+                btnEdit.tag = [arrAllData indexOfObject:dataDictionary];
+                dictData =dataDictionary;
+                
+                [view1 addSubview:lblStatus];
+                [view1 addSubview:lblTitle];
+                [view1 addSubview:btnEdit];
+                if ([[dataDictionary valueForKey:@"BillboardType"] isEqualToString:@"Website"]) {
+                    [view1 addSubview:web];
+                }else{
+                    [view1 addSubview:wb];
+                }
+                [self.scrl addSubview:view1];
+                BOOL isImage =NO;
+                //image
+                if (![[NSString stringWithFormat:@"%@",[[dataDictionary valueForKey:@"Image"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@""])
+                {
+                    UIImageView *img=[[UIImageView alloc] init];
+                    if (![[NSString stringWithFormat:@"%@",[[dataDictionary valueForKey:@"Video_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@""])
+                    {
+                        if (mainScreen.size.height == 480)
+                        {
+                            img.frame=CGRectMake(5, lblTitle.frame.size.height+100, view1.frame.size.width/2-5,view1.frame.size.width/2-5);
+                        }
+                        else
+                        {
+                            img.frame=CGRectMake(5, lblTitle.frame.size.height+150, view1.frame.size.width/2-5,view1.frame.size.width/2-5);
+                        }
+                    }
+                    else
+                    {
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+90, view1.frame.size.width-10, view1.frame.size.height-200);
+                    }
+                    img.backgroundColor=[UIColor blackColor];
+                    img.tag=999;
+                    img.contentMode = UIViewContentModeScaleToFill;
+                    [img setContentMode:UIViewContentModeScaleAspectFit];
+                    
+                    NSString *thumbURL=[[dataDictionary valueForKey:@"Image"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+                    NSURL *url = [NSURL URLWithString:thumbURL];
+                    [img  sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                    [view1 addSubview:img];
+                    [self.scrl addSubview:view1];
+                    isImage =YES;
+                }
+                //video
+                if (![[NSString stringWithFormat:@"%@",[[dataDictionary valueForKey:@"Video_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@""])
+                {
+                    UIImageView *img=[[UIImageView alloc] init];
+                    if (isImage)
+                    {
+                        if (mainScreen.size.height == 480)
+                        {
+                            img.frame=CGRectMake(view1.frame.size.width/2+5,lblTitle.frame.size.height+100, view1.frame.size.width/2-5,view1.frame.size.width/2-5);
+                        }
+                        else
+                        {
+                            img.frame=CGRectMake(view1.frame.size.width/2+5,lblTitle.frame.size.height+150, view1.frame.size.width/2-5,view1.frame.size.width/2-5);
+                        }
+                        
+                    }
+                    else
+                    {
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+90, view1.frame.size.width-10, view1.frame.size.height-200);
+                    }
+                    img.backgroundColor=[UIColor blackColor];
+                    img.tag=999;
+                    img.contentMode = UIViewContentModeScaleToFill;
+                    [img setContentMode:UIViewContentModeScaleAspectFit];
+                    NSString *thumbURL=[[dataDictionary valueForKey:@"Video_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+                    NSURL *url = [NSURL URLWithString:thumbURL];
+                    [img  sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                    NSString *urlVideo = [dataDictionary valueForKey:@"Video"];
+                    [arrVideoUrl addObject:urlVideo];
+                    UIButton *button = [[UIButton alloc] init];
+                    [ button setImage:[UIImage imageNamed:@"btn_video_play" ] forState:UIControlStateNormal];
+                    [button setBackgroundColor:[UIColor clearColor]];
+                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    button.frame = CGRectMake((img.frame.size.width/2)-37, (img.frame.size.height/2)-37,75, 75);
+                    button.tag= urlCount;
+                    urlCount++;
+                    button.enabled = YES;
+                    button.userInteractionEnabled = YES;
+                    [button addTarget:self action:@selector(btnPlayVideoClicked:) forControlEvents:UIControlEventTouchUpInside];
+                    [self.scrl addSubview:view1];
+                    [view1 addSubview:lblTitle];
+                    [img addSubview:button];
+                    [view1 addSubview:img];
+                    [view1 bringSubviewToFront:button];
+                    img.userInteractionEnabled=YES;
+                }
+
+            }
+
             if ([[dataDictionary valueForKey:@"BillboardType"] isEqualToString:@"Image"])
             {
                 view1.tag=4;
@@ -735,7 +902,7 @@
     else
     {
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Offers and more Coming Soon!" preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Offers and more Coming Soon!" preferredStyle:UIAlertControllerStyleAlert];
         UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                 [self.navigationController popViewControllerAnimated:YES];
             
@@ -837,17 +1004,19 @@
             if ([arrAllData isKindOfClass:[NSString class]])
             {
                 UIAlertController *alert = [[UIAlertController alloc] init];
-                alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Offers and more Coming Soon!" preferredStyle:UIAlertControllerStyleAlert];
+                alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Offers and more Coming Soon!" preferredStyle:UIAlertControllerStyleAlert];
                 UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
                     [self.navigationController popViewControllerAnimated:YES];
                 }];
                 [alert addAction:btn_cancel];
                 [self presentViewController:alert animated:YES completion:nil];
                 return;
+            }else{
+                [self SetPageControl];
+
             }
         }
     }
-    [self SetPageControl];
 }
 
 #pragma mark- Button Action
@@ -861,7 +1030,7 @@
 {
     UIButton *btn   = (UIButton *)sender;
     
-    ManageBillBoardCoupanVC *manageCoupon = [[ManageBillBoardCoupanVC alloc] initWithNibName:@"ManageBillBoardCoupanVC" bundle:nil];
+    ManageBillBoardCoupanVC *manageCoupon = (ManageBillBoardCoupanVC *)[self.storyboard instantiateViewControllerWithIdentifier:@"ManageBillBoardCoupanVC"];
     manageCoupon.dictBillBoardInfo=[[NSMutableDictionary alloc]init];
     //DP
     manageCoupon.dictBillBoardInfo =[arrDictData objectAtIndex:btn.tag];

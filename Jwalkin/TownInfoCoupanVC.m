@@ -2,7 +2,7 @@
 //  TownInfoCoupanVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 15/07/15.
+//  Created by Asai on 15/07/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -126,30 +126,30 @@
                     
                     //Dp30Dec
                     
-                    if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
-                    {
-                        
-                        if (IS_IPHONE_4_AND_OLDER)
-                        {
-                            wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-14)];
-                            
-                        }
-                        else
-                        {
-                           wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-14)];
-                        }
-                    }
-                    else if(IS_IPHONE_6)
-                    {
-                        wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x+20, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14)];
-                        
-                    }
-                    else if(IS_IPHONE_6P)
-                    {
-                        
+//                    if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
+//                    {
+//                        
+//                        if (IS_IPHONE_4_AND_OLDER)
+//                        {
+//                            wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-14)];
+//                            
+//                        }
+//                        else
+//                        {
+//                           wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-14)];
+//                        }
+//                    }
+//                    else if(IS_IPHONE_6)
+//                    {
+//                        wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x+20, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14)];
+//                        
+//                    }
+//                    else if(IS_IPHONE_6P)
+//                    {
+//                        
                       wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x+38, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14)];
                         
-                    }
+//                    }
                     
 
                 }
@@ -276,30 +276,30 @@
                     
                     //Dp30Dec
                     
-                    if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
-                    {
-                        
-                        if (IS_IPHONE_4_AND_OLDER)
-                        {
-                            wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-14)];
-                            
-                        }
-                        else
-                        {
-                            wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-14)];
-                        }
-                    }
-                    else if(IS_IPHONE_6)
-                    {
-                        wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x+20, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14)];
-                        
-                    }
-                    else if(IS_IPHONE_6P)
-                    {
-                        
+//                    if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
+//                    {
+//                        
+//                        if (IS_IPHONE_4_AND_OLDER)
+//                        {
+//                            wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-14)];
+//                            
+//                        }
+//                        else
+//                        {
+//                            wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-14)];
+//                        }
+//                    }
+//                    else if(IS_IPHONE_6)
+//                    {
+//                        wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x+20, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14)];
+//                        
+//                    }
+//                    else if(IS_IPHONE_6P)
+//                    {
+                    
                         wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x+38, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14)];
                         
-                    }
+//                    }
                     
                     
                 }
@@ -311,30 +311,30 @@
                     
                     //Dp30Dec
                     
-                    if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
-                    {
-                        
-                        if (IS_IPHONE_4_AND_OLDER)
-                        {
-                            wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-14)];
-                            
-                        }
-                        else
-                        {
-                            wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-14)];
-                        }
-                    }
-                    else if(IS_IPHONE_6)
-                    {
-                        wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x+20, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14)];
-                        
-                    }
-                    else if(IS_IPHONE_6P)
-                    {
-                        
+//                    if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
+//                    {
+//                        
+//                        if (IS_IPHONE_4_AND_OLDER)
+//                        {
+//                            wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-14)];
+//                            
+//                        }
+//                        else
+//                        {
+//                            wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-14)];
+//                        }
+//                    }
+//                    else if(IS_IPHONE_6)
+//                    {
+//                        wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x+20, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14)];
+//                        
+//                    }
+//                    else if(IS_IPHONE_6P)
+//                    {
+                    
                         wb = [[UIWebView alloc] initWithFrame:CGRectMake(self.scrl.frame.origin.x+38, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14)];
                         
-                    }
+//                    }
                     
 
                 }
@@ -512,30 +512,30 @@
                 lblTitle.text = [dictBill valueForKey:@"title"];
                 UIImageView *img=[[UIImageView alloc] init];
                 //Dp30Dec
-                if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
-                {
-                    
-                    if (IS_IPHONE_4_AND_OLDER)
-                    {
-                         img.frame=CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-14);
-                        
-                    }
-                    else
-                    {
-                        img.frame=CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-14);
-                    }
-                }
-                else if(IS_IPHONE_6)
-                {
-                     img.frame=CGRectMake(self.scrl.frame.origin.x+20, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14);
-                    
-                }
-                else if(IS_IPHONE_6P)
-                {
+//                if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
+//                {
+//                    
+//                    if (IS_IPHONE_4_AND_OLDER)
+//                    {
+//                         img.frame=CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-14);
+//                        
+//                    }
+//                    else
+//                    {
+//                        img.frame=CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-14);
+//                    }
+//                }
+//                else if(IS_IPHONE_6)
+//                {
+//                     img.frame=CGRectMake(self.scrl.frame.origin.x+20, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14);
+//                    
+//                }
+//                else if(IS_IPHONE_6P)
+//                {
                 
                     img.frame=CGRectMake(self.scrl.frame.origin.x+38, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14);
                 
-                }
+//                }
                 
 
                 //img.frame=CGRectMake(5, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14);
@@ -560,30 +560,30 @@
                 lblTitle.text = [dictBill valueForKey:@"title"];
                 UIImageView *img=[[UIImageView alloc] init];
                 
-                if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
-                {
-                    
-                    if (IS_IPHONE_4_AND_OLDER)
-                    {
-                        img.frame=CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-14);
-                        
-                    }
-                    else
-                    {
-                        img.frame=CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-14);
-                    }
-                }
-                else if(IS_IPHONE_6)
-                {
-                    img.frame=CGRectMake(self.scrl.frame.origin.x+20, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14);
-                    
-                }
-                else if(IS_IPHONE_6P)
-                {
-                    
+//                if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
+//                {
+//                    
+//                    if (IS_IPHONE_4_AND_OLDER)
+//                    {
+//                        img.frame=CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-14);
+//                        
+//                    }
+//                    else
+//                    {
+//                        img.frame=CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-14);
+//                    }
+//                }
+//                else if(IS_IPHONE_6)
+//                {
+//                    img.frame=CGRectMake(self.scrl.frame.origin.x+20, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14);
+//                    
+//                }
+//                else if(IS_IPHONE_6P)
+//                {
+                
                     img.frame=CGRectMake(self.scrl.frame.origin.x+38, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14);
                     
-                }
+//                }
                 
 
                 
@@ -615,12 +615,149 @@
                 [view1 bringSubviewToFront:button];
                 img.userInteractionEnabled=YES;
             }
+            if ([[dataDictionary valueForKey:@"billboard_type"] isEqualToString:@"News"] || [[dataDictionary valueForKey:@"billboard_type"] isEqualToString:@"Deal"] || [[dataDictionary valueForKey:@"billboard_type"] isEqualToString:@"Event"])
+            {
+                view1.tag=3;
+                NSArray *arrSubBill = [dataDictionary valueForKey:@"subbillboard"];
+                NSDictionary *dictBill = [arrSubBill objectAtIndex:0];
+                
+                lblTitle.text = [dictBill valueForKey:@"title"];
+                UIWebView *wb;
+                if (![[NSString stringWithFormat:@"%@",[[dictBill valueForKey:@"image_name"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@"http://emsbapp.com/admin/images/no_image.jpg"]  || ![[NSString stringWithFormat:@"%@",[[dictBill valueForKey:@"video_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@"http://emsbapp.com/admin/images/no_image.jpg"] )
+                {
+                    wb = [[UIWebView alloc] initWithFrame:CGRectMake(5, lblTitle.frame.size.height+10, view1.frame.size.width-10, 70)];
+                }
+                else
+                {
+                    wb = [[UIWebView alloc] initWithFrame:CGRectMake(5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-8)];
+                }
+                wb.backgroundColor = [UIColor clearColor];
+                wb.opaque=NO;
+                wb.delegate = self;
+                [wb loadHTMLString:[NSString stringWithFormat:@"<html><body text=\"#FFFFFF\">%@</body></html>",[dictBill valueForKey:@"description"]] baseURL:nil];
+                [view1 addSubview:lblTitle];
+                [view1 addSubview:wb];
+                [self.scrl addSubview:view1];
+                //cp
+                BOOL isImage =NO;
+                //image
+                if (![[NSString stringWithFormat:@"%@",[[dictBill valueForKey:@"image_name"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@"http://emsbapp.com/admin/images/no_image.jpg"])
+                {
+                    UIImageView *img=[[UIImageView alloc] init];
+                    if (![[NSString stringWithFormat:@"%@",[[dictBill valueForKey:@"video_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@"http://emsbapp.com/admin/images/no_image.jpg"])
+                    {
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+90, view1.frame.size.width-10, view1.frame.size.height/2-50);
+                    }
+                    else
+                    {
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+90, view1.frame.size.width-10, view1.frame.size.height-70);
+                    }
+                    img.backgroundColor=[UIColor clearColor];
+                    img.tag=999;
+                    img.contentMode = UIViewContentModeScaleToFill;
+                    [img setContentMode:UIViewContentModeScaleAspectFit];
+                    NSString *thumbURL=[[dictBill valueForKey:@"image_name"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+                    NSURL *url = [NSURL URLWithString:thumbURL];
+                    [img  sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                    [view1 addSubview:img];
+                    [self.scrl addSubview:view1];
+                    isImage =YES;
+                }
+                //video
+                if (![[NSString stringWithFormat:@"%@",[[dictBill valueForKey:@"video_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]]] isEqualToString:@"http://emsbapp.com/admin/images/no_image.jpg"])
+                {
+                    UIImageView *img=[[UIImageView alloc] init];
+                    if (isImage)
+                    {
+                        img.frame=CGRectMake(5,view1.frame.size.height/2+70, view1.frame.size.width-10, view1.frame.size.height/2-50);
+                    }
+                    else
+                    {
+                        img.frame=CGRectMake(5, lblTitle.frame.size.height+90, view1.frame.size.width-10, view1.frame.size.height-70);
+                    }
+                    img.backgroundColor=[UIColor clearColor];
+                    img.tag=999;
+                    img.contentMode = UIViewContentModeScaleToFill;
+                    [img setContentMode:UIViewContentModeScaleAspectFit];
+                    NSString *thumbURL=[[dictBill valueForKey:@"video_thumb"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+                    NSURL *url = [NSURL URLWithString:thumbURL];
+                    [img  sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                    NSString *urlVideo = [dictBill valueForKey:@"video_name"];
+                    [arrVideoUrl addObject:urlVideo];
+                    UIButton *button = [[UIButton alloc] init];
+                    [ button setImage:[UIImage imageNamed:@"btn_video_play" ] forState:UIControlStateNormal];
+                    [button setBackgroundColor:[UIColor clearColor]];
+                    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+                    button.frame = CGRectMake((img.frame.size.width/2)-37, (img.frame.size.height/2)-37,75, 75);
+                    button.tag= urlCount;
+                    urlCount++;
+                    button.enabled = YES;
+                    button.userInteractionEnabled = YES;
+                    [button addTarget:self action:@selector(btnPlayVideoClicked:) forControlEvents:UIControlEventTouchUpInside];
+                    [self.scrl addSubview:view1];
+                    [view1 addSubview:lblTitle];
+                    [img addSubview:button];
+                    [view1 addSubview:img];
+                    [view1 bringSubviewToFront:button];
+                    img.userInteractionEnabled=YES;
+                }
+                //cp
+            }
+            if ([[dataDictionary valueForKey:@"billboard_type"] isEqualToString:@"I"])
+            {
+                view1.tag=4;
+                NSArray *arrSubBill = [dataDictionary valueForKey:@"subbillboard"];
+                NSDictionary *dictBill = [arrSubBill objectAtIndex:0];
+                lblTitle.text = [dictBill valueForKey:@"title"];
+                UIImageView *img=[[UIImageView alloc] init];
+                //Dp30Dec
+                //                if (IS_IPHONE_4_AND_OLDER || IS_IPHONE_5)
+                //                {
+                //
+                //                    if (IS_IPHONE_4_AND_OLDER)
+                //                    {
+                //                         img.frame=CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+10, view1.frame.size.width-10, view1.frame.size.height-14);
+                //
+                //                    }
+                //                    else
+                //                    {
+                //                        img.frame=CGRectMake(self.scrl.frame.origin.x-5, lblTitle.frame.size.height+15, view1.frame.size.width-10, view1.frame.size.height-14);
+                //                    }
+                //                }
+                //                else if(IS_IPHONE_6)
+                //                {
+                //                     img.frame=CGRectMake(self.scrl.frame.origin.x+20, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14);
+                //
+                //                }
+                //                else if(IS_IPHONE_6P)
+                //                {
+                
+                img.frame=CGRectMake(self.scrl.frame.origin.x+38, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14);
+                
+                //                }
+                
+                
+                //img.frame=CGRectMake(5, lblTitle.frame.size.height+20, view1.frame.size.width-10, view1.frame.size.height-14);
+                img.backgroundColor=[UIColor clearColor];
+                img.tag=999;
+                img.contentMode = UIViewContentModeScaleToFill;
+                [img setContentMode:UIViewContentModeScaleAspectFit];
+                [img setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight];
+                NSString *thumbURL=[[dictBill valueForKey:@"image_name"] stringByAddingPercentEncodingWithAllowedCharacters:[NSCharacterSet URLFragmentAllowedCharacterSet]];
+                NSURL *url = [NSURL URLWithString:thumbURL];
+                [img  sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"placeholder"]];
+                [view1 addSubview:lblTitle];
+                [view1 addSubview:img];
+                [self.scrl addSubview:view1];
+            }
+
         }
+        
     }
     else
     {
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Offers and more Coming Soon!" preferredStyle:UIAlertControllerStyleAlert];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Offers and more Coming Soon!" preferredStyle:UIAlertControllerStyleAlert];
             UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [alert dismissViewControllerAnimated:YES completion:^{
                     

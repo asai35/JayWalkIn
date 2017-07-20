@@ -2,7 +2,7 @@
 //  TutorialVC.h
 //  Jwalkin
 //
-//  Created by Ridmal Choudhary on 22/12/15.
+//  Created by Asai on 22/12/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 

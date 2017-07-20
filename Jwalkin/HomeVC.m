@@ -2,7 +2,7 @@
 //  HomeVC.m
 //  Jwalkin
 //
-//  Created by Kanika on 06/11/13.
+//  Created by Asai on 06/11/13.
 //  Copyright (c) 2013 fox. All rights reserved.
 //
 
@@ -17,10 +17,10 @@
 #import "Reachability.h"
 #import "ManageBillBoardVC.h"
 #import "TownInfoCenterVC.h"
-#import "UpdateProfileVC.h"
 #import "ManageOfferVC.h"
 #import "MyFavVC.h"
 #import "TutorialVC.h"
+#import "AddOfferVC.h"
 
 #define IS_IPAD (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define IS_IPHONE (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone) // iPhone and       iPod touch style UI
@@ -55,14 +55,6 @@
 @implementation HomeVC
 @synthesize imgBtnView,imglogo,btnInfo;
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -72,7 +64,7 @@
     app = (AppDelegate*)[UIApplication sharedApplication].delegate ;
     btnSetting.enabled=NO;
     [self performSelector:@selector(TransFormBtns) withObject:nil afterDelay:1.0];
-      scrl.contentSize = CGSizeMake(scrl.frame.size.width,560);
+//      scrl.contentSize = CGSizeMake(scrl.frame.size.width,560);
     Reachability *networkReachability = [Reachability reachabilityForInternetConnection];
     NetworkStatus networkStatus = [networkReachability currentReachabilityStatus];
     if (networkStatus == NotReachable)
@@ -277,7 +269,7 @@
 -(IBAction)ButtonClicked:(id)sender
 {
     UIButton *btn = (UIButton *)sender;
-    SubCategoriesVC *sub = [[SubCategoriesVC alloc] initWithNibName:@"SubCategoriesVC" bundle:nil];
+    SubCategoriesVC *sub = [self.storyboard instantiateViewControllerWithIdentifier:@"SubCategoriesVC"];
     switch (btn.tag)
     {
         case 1:
@@ -378,7 +370,7 @@
         
         case 12:
         {
-            SignupVC *signup = [[SignupVC alloc] initWithNibName:@"SignupVC" bundle:nil];
+            SignupVC *signup = [self.storyboard instantiateViewControllerWithIdentifier:@"SignupVC"];//[[SignupVC alloc] initWithNibName:@"SignupVC" bundle:nil];
             [self.navigationController pushViewController:signup animated:YES];
         }
             break;
@@ -406,14 +398,19 @@
             break;
         case 14:
         {
-            MyFavVC *my = [[MyFavVC alloc] initWithNibName:@"MyFavVC" bundle:nil];
+            MyFavVC *my = [self.storyboard instantiateViewControllerWithIdentifier:@"MyFavVC"];
             [self.navigationController pushViewController:my animated:YES];
         }
         default:
             break;
     }
 }
-
+-(IBAction)btnSwitchAccountClicked:(id)sender
+{
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *vc = [storyboard instantiateViewControllerWithIdentifier:@"switchVC"];
+    [self.navigationController pushViewController:vc animated:YES];
+}
 -(IBAction)btnLogoutClicked:(id)sender
 {
     
@@ -422,24 +419,24 @@
     
 //    if ( [[NSUserDefaults standardUserDefaults] objectForKey:@"loggedin"])
 //    {
-//        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Jaywalk.In" message:@"Are you sure you want to logout?" delegate:self cancelButtonTitle:@"YES" otherButtonTitles:@"NO", nil];
     UIAlertController *alert = [[UIAlertController alloc] init];
-    alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:@"Are you sure you want to logout?" preferredStyle:UIAlertControllerStyleAlert];
+    alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:@"Are you sure you want to logout?" preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *btn_ok = [UIAlertAction actionWithTitle:@"YES" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-            [app showHUD];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loggedin"];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"merchantid"];
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userInfo"];
-            [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"user-Id"];
-            //[[NSUserDefaults standardUserDefaults] synchronize];
-            [NSThread sleepForTimeInterval:0.5];
-            imgBtnView.image = [UIImage imageNamed:@"jwakin_logout"];
-            btnSignup.tag = 12;
-            [app hideHUD];
-            btnMenu.hidden = YES;
-            
-            [[NSUserDefaults standardUserDefaults]removeObjectForKey:@"fbname"];
-            [[NSUserDefaults standardUserDefaults]synchronize];
+        [app showHUD];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"loggedin"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"merchantid"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"userInfo"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user-Id"];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"accounts"];
+        //[[NSUserDefaults standardUserDefaults] synchronize];
+        [NSThread sleepForTimeInterval:0.5];
+        imgBtnView.image = [UIImage imageNamed:@"jwakin_logout"];
+        btnSignup.tag = 12;
+        [app hideHUD];
+        btnMenu.hidden = YES;
+        
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"fbname"];
+        [[NSUserDefaults standardUserDefaults] synchronize];
     }];
     [alert addAction:btn_ok];
     UIAlertAction *btn_cancel = [UIAlertAction actionWithTitle:@"NO" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
@@ -460,7 +457,8 @@
 
 -(IBAction)InfoClicked:(id)sender
 {
-    InfoVC *info = [[InfoVC alloc] initWithNibName:@"InfoVC" bundle:nil];
+//    InfoVC *info = [[InfoVC alloc] initWithNibName:@"InfoVC" bundle:nil];
+    InfoVC *info = [self.storyboard instantiateViewControllerWithIdentifier:@"InfoVC"];
     [self.navigationController pushViewController:info animated:YES];
 }
 
@@ -556,20 +554,19 @@
 
 -(IBAction)btnManageBilBoardClicked:(id)sender
 {
-    ManageBillBoardVC *manageBB = [[ManageBillBoardVC alloc] initWithNibName:@"ManageBillBoardVC" bundle:nil];
+    ManageBillBoardVC *manageBB = [self.storyboard instantiateViewControllerWithIdentifier:@"ManageBillBoardVC"];
     [self.navigationController pushViewController:manageBB animated:YES];
 }
 
 -(IBAction)btnUpdateProfileClicked:(id)sender
 {
-    UpdateProfileVC *update = [[UpdateProfileVC alloc] initWithNibName:@"UpdateProfileVC" bundle:nil];
-    [self presentViewController:update animated:YES completion:nil];
-    //[self.navigationController pushViewController:update animated:YES];
+    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"updateproVC"];
+    [self presentViewController:vc animated:YES completion:nil];
 }
 
 -(IBAction)btnManageOfferClicked:(id)sender
 {
-    ManageOfferVC *manageOffer = [[ManageOfferVC alloc] initWithNibName:@"ManageOfferVC" bundle:nil];
+    ManageOfferVC *manageOffer = [self.storyboard instantiateViewControllerWithIdentifier:@"ManageOfferVC"];//[[ManageOfferVC alloc] initWithNibName:@"ManageOfferVC" bundle:nil];
     [self.navigationController pushViewController:manageOffer animated:YES];
 }
 
@@ -588,7 +585,7 @@
 //        actionSheet.tintColor = [UIColor redColor];
 //        [actionSheet showInView:self.view];
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *manageprofile = [UIAlertAction actionWithTitle:@"Manage Profile" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 if ( [[NSUserDefaults standardUserDefaults] objectForKey:@"loggedin"])
                 {
@@ -603,10 +600,14 @@
                 }
         }];
         [alert addAction:managebillboards];
-        UIAlertAction *manageoffers = [UIAlertAction actionWithTitle:@"Manage Offers" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
-                [self btnManageOfferClicked:nil];
+/*        UIAlertAction *manageoffers = [UIAlertAction actionWithTitle:@"Manage Punch Card" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self btnManageOfferClicked:nil];
         }];
-        [alert addAction:manageoffers];
+        [alert addAction:manageoffers];*/
+        UIAlertAction *switchAccount = [UIAlertAction actionWithTitle:@"Switch Account" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            [self btnSwitchAccountClicked:nil];
+        }];
+        [alert addAction:switchAccount];
         UIAlertAction *logout = [UIAlertAction actionWithTitle:@"Logout" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self btnLogoutClicked:nil];
         }];
@@ -635,7 +636,7 @@
 //        actionSheet.tintColor = [UIColor redColor];
 //        [actionSheet showInView:self.view];
         UIAlertController *alert = [[UIAlertController alloc] init];
-        alert = [UIAlertController alertControllerWithTitle:@"Jaywalk.In" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
+        alert = [UIAlertController alertControllerWithTitle:@"Empower Main Street" message:nil preferredStyle:UIAlertControllerStyleActionSheet];
         UIAlertAction *logout = [UIAlertAction actionWithTitle:@"Logout" style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 [self btnLogoutClicked:nil];
         }];

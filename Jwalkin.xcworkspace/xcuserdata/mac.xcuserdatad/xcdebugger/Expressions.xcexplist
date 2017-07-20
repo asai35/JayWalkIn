@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "-[ManageBillBoardVC SetPageControl]:ManageBillBoardVC.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "lblTitle.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[ManageBillBoardCoupanVC SetPageControl]:ManageBillBoardCoupanVC.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "view1.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[UpdateProfileViewController btnUpdateClick]:UpdateProfileViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "app.selectedSubCat">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CouponVC getdata]:CouponVC.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[[NSUserDefaults standardUserDefaults]valueForKey:@&quot;merchantid&quot;]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CouponVC viewDidAppear:]:CouponVC.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "self.strMName">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[CouponVC SetPageControl]:CouponVC.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "[NSURLRequest requestWithURL:url]">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+      <ContextState
+         contextName = "-[UpdateProfileViewController tableView:cellForRowAtIndexPath:]:UpdateProfileViewController.m">
+         <PersistentStrings>
+            <PersistentString
+               value = "tableView.frame">
+            </PersistentString>
+         </PersistentStrings>
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>

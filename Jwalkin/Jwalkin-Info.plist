@@ -17,7 +17,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>Jaywalk.In</string>
+	<string>Empower Main Street</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -32,6 +32,16 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>fb1841411506119094</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>http://emsbapp.com</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>pdk4894554150523648334</string>
 			</array>
 		</dict>
 	</array>
@@ -61,6 +71,7 @@
 		<string>fb-messenger-api</string>
 		<string>fbauth2</string>
 		<string>fbshareextension</string>
+		<string>pinterestsdk.v1</string>
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
@@ -68,19 +79,49 @@
 	<dict>
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
+		<key>NSExceptionDomains</key>
+		<dict>
+			<key>pinit</key>
+			<dict>
+				<key>NSExceptionAllowInsecureHTTPSLoads</key>
+				<false/>
+				<key>NSExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+				<key>NSExceptionRequiresForwardSecrecy</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<false/>
+				<key>NSRequiresCertificateTransparency</key>
+				<false/>
+				<key>NSThirdPartyExceptionAllowInsecureHTTPSLoads</key>
+				<false/>
+				<key>NSThirdPartyExceptionMinimumTLSVersion</key>
+				<string>TLSv1.2</string>
+				<key>NSThirdPartyExceptionRequiresForwardSecrecy</key>
+				<true/>
+			</dict>
+		</dict>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>medialibray use</string>
 	<key>NSCameraUsageDescription</key>
 	<string>camera use for barcode scan</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Location is required to find out where you are</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Location is required to find out where you are</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>microphone use</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>photo library use</string>
 	<key>UIApplicationExitsOnSuspend</key>
 	<false/>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
-	<string>ViewController</string>
+	<string>Main</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>

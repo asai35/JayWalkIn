@@ -2,7 +2,7 @@
 //  CommentVC.h
 //  Jwalkin
 //
-//  Created by Kanika on 24/06/15.
+//  Created by Asai on 24/06/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -13,7 +13,6 @@
 {
     NetworkUtills *netUtills;
 
-    IBOutlet UIButton *btnBack;
     IBOutlet UIButton *btnSend;
     IBOutlet UITextView *tvComment;
     IBOutlet UITableView *tblComment;

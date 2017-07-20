@@ -2,7 +2,7 @@
 //  SignupVC.m
 //  Jwalkin
 //
-//  Created by Chanchal Warde on 5/13/15.
+//  Created by Asai on 5/13/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -12,14 +12,11 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <Bolts/Bolts.h>
-//#import "AFHTTPClient.h"
-//#import "AFImageRequestOperation.h"
 #import "AFNetworking.h"
 #import "UrlFile.h"
 #import "Reachability.h"
-#import "UpdateProfileVC.h"
 #import "SBJson5.h"
-
+#import "SignupCustomerViewController.h"
 @interface SignupVC ()
 
 @end
@@ -36,6 +33,12 @@
     [[UINavigationBar appearance] setBackgroundImage:[UIImage imageNamed:@"status_bar"] forBarMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance]setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor whiteColor]}];
     // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+//    [app hideHUD];
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -168,7 +171,7 @@
         else
         {
             NSDictionary *parameters = @{@"email_id": tfEmail.text,
-                                         @"password":tfPassword.text };
+                                         @"password": tfPassword.text };
             
             [app showHUD];
             [[JWNetWorkManager sharedManager] POST:@"login.php" data:parameters completion:^(id data, NSError *error) {
@@ -192,33 +195,50 @@
                             }
                         }
                         NSLog(@"dictdata %@",newinfo);
-                        [[NSUserDefaults standardUserDefaults]setObject:newinfo forKey:@"userInfo"];
+                        NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+                        if ([defaults objectForKey:@"loggedin"]) {
+                            NSMutableArray *arrayAccounts = [[NSMutableArray alloc] initWithArray:[defaults objectForKey:@"accounts"]];
+                            NSMutableDictionary *account = [[NSMutableDictionary alloc] initWithDictionary:[defaults objectForKey:@"userInfo"]];
+                            if (![arrayAccounts containsObject:account]) {
+                                [arrayAccounts addObject:account];
+                            }
+                            [defaults setObject:arrayAccounts forKey:@"accounts"];
+                        }else{
+                            [defaults setObject:@[newinfo] forKey:@"accounts"];
+                        }
+                        [defaults setObject:newinfo forKey:@"userInfo"];
                         NSString *merchantid = [dictData valueForKey:@"id"];
                         NSString *merchantName = [dictData valueForKey:@"name"];
                         NSString *FbLink = [dictData valueForKey:@"fb_link"];
                         NSString *WebLink = [dictData valueForKey:@"website"];
-                        [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user-Id"];
-                        [[NSUserDefaults standardUserDefaults]synchronize];
-                        [[NSUserDefaults standardUserDefaults] setObject:merchantName forKey:@"merchantName"];
-                        [[NSUserDefaults standardUserDefaults]synchronize];
-                        [[NSUserDefaults standardUserDefaults] setObject:merchantid forKey:@"merchantid"];
-                        [[NSUserDefaults standardUserDefaults]synchronize];
-                        [[NSUserDefaults standardUserDefaults]setObject:merchantid forKey:@"user-Id"];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
-                        
-                        [[NSUserDefaults standardUserDefaults] setObject:@"registered" forKey:@"loggedin"];
-                        [[NSUserDefaults standardUserDefaults] synchronize];
-                        [[NSUserDefaults standardUserDefaults] setObject:FbLink forKey:@"fb_link"];
-                        [[NSUserDefaults standardUserDefaults]synchronize];
-                        [[NSUserDefaults standardUserDefaults] setObject:WebLink forKey:@"Website"];
-                        [[NSUserDefaults standardUserDefaults]synchronize];
-                        [self.navigationController popViewControllerAnimated:YES];
-                        [app hideHUD];
+                        [defaults setObject:merchantName forKey:@"merchantName"];
+                        [defaults synchronize];
+                        [defaults setObject:merchantid forKey:@"merchantid"];
+                        [defaults synchronize];
+                        [defaults setObject:merchantid forKey:@"user-Id"];
+                        [defaults synchronize];
+                        [defaults setObject:@"registered" forKey:@"loggedin"];
+                        [defaults synchronize];
+                        [defaults setObject:FbLink forKey:@"fb_link"];
+                        [defaults synchronize];
+                        [defaults setObject:WebLink forKey:@"Website"];
+                        [defaults synchronize];
+                        [appdelegate() hideHUD];
+
+                        dispatch_async(dispatch_get_main_queue(), ^{
+                            [self.navigationController popToRootViewControllerAnimated:YES];
+                        });
+//                        NSArray *vcs = self.navigationController.viewControllers;
+//                        for (UIViewController *vc in vcs) {
+//                            if ([vc isEqual:[HomeVC class]]) {
+//                                [self.navigationController popToViewController:vc animated:YES];
+//                            }
+//                        }
                     }
                     else if([[data valueForKey:@"status"] intValue]== 0)
                     {
                         [self showAlert:@"Message" message:[NSString stringWithFormat:@"%@",[data objectForKey:@"data"]] cancel:@"Ok" other:nil];
-                        [app hideHUD];
+                        [appdelegate() hideHUD];
                     }
                     else if([[data valueForKey:@"status"] intValue] == 2)
                     {
@@ -251,84 +271,6 @@
 
             
             
-//            [app showHUD];
-//            NSURL *codeURL = [NSURL URLWithString:mainUrl];
-//            AFHTTPClient *client= [AFHTTPClient clientWithBaseURL:codeURL];
-//            NSMutableURLRequest *request = [client multipartFormRequestWithMethod:@"POST" path:@"login.php?" parameters:parameters constructingBodyWithBlock: ^(id <AFMultipartFormData>formData)
-//                                            {
-//                                            }];
-//            AFHTTPRequestOperation *operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-//            [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation *operation, id responseObject)
-//             {
-//                 NSString *response = [operation responseString];
-//                 NSError *error;
-//                 if (response!=nil)
-//                 {[app hideHUD];
-//                     NSDictionary *responseDict = [NSJSONSerialization
-//                                                   JSONObjectWithData:[operation responseData] options:kNilOptions error:&error];
-//                     if ([[responseDict valueForKey:@"status"] intValue]== 1)
-//                     {
-//                         NSArray *arrData = [responseDict valueForKey:@"data"];
-//                         NSMutableDictionary *dictData= [[NSMutableDictionary alloc]init];
-//                         dictData = [[arrData objectAtIndex:0] mutableCopy];
-//                         NSMutableDictionary *newinfo = [[NSMutableDictionary alloc]init];
-//                         for(id ss in dictData)
-//                         {
-//                             NSString *str  =[dictData objectForKey:ss];
-//                             if (![str isKindOfClass:[NSNull class]])
-//                             {
-//                                 [newinfo setObject:str forKey:ss];
-//                             }
-//                         }
-//                         NSLog(@"dictdata %@",newinfo);
-//                         [[NSUserDefaults standardUserDefaults]setObject:newinfo forKey:@"userInfo"];
-//                         NSString *merchantid = [dictData valueForKey:@"id"];
-//                         NSString *merchantName = [dictData valueForKey:@"name"];
-//                         NSString *FbLink = [dictData valueForKey:@"fb_link"];
-//                         NSString *WebLink = [dictData valueForKey:@"website"];
-//                         [[NSUserDefaults standardUserDefaults] removeObjectForKey:@"user-Id"];
-//                         [[NSUserDefaults standardUserDefaults]synchronize];
-//                         [[NSUserDefaults standardUserDefaults] setObject:merchantName forKey:@"merchantName"];
-//                         [[NSUserDefaults standardUserDefaults]synchronize];
-//                         [[NSUserDefaults standardUserDefaults] setObject:merchantid forKey:@"merchantid"];
-//                         [[NSUserDefaults standardUserDefaults]synchronize];
-//                         [[NSUserDefaults standardUserDefaults]setObject:merchantid forKey:@"user-Id"];
-//                         [[NSUserDefaults standardUserDefaults] synchronize];
-//
-//                         [[NSUserDefaults standardUserDefaults] setObject:@"registered" forKey:@"loggedin"];
-//                         [[NSUserDefaults standardUserDefaults] synchronize];
-//                         [[NSUserDefaults standardUserDefaults] setObject:FbLink forKey:@"fb_link"];
-//                         [[NSUserDefaults standardUserDefaults]synchronize];
-//                         [[NSUserDefaults standardUserDefaults] setObject:WebLink forKey:@"Website"];
-//                         [[NSUserDefaults standardUserDefaults]synchronize];
-//                         [self.navigationController popViewControllerAnimated:YES];
-//                     }
-//                     else if([[responseDict valueForKey:@"status"] intValue]== 0)
-//                     {
-//                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:@"Message" message:[NSString stringWithFormat:@"%@",[responseDict objectForKey:@"data"]] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alrt show];
-//
-//                     
-//                     
-//                     }
-//                     else if([[responseDict valueForKey:@"status"] intValue] == 2)
-//                     {
-//                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:@"Message" message:[NSString stringWithFormat:@"%@",[responseDict objectForKey:@"data"]] delegate:self cancelButtonTitle:@"Later" otherButtonTitles:@"Subscribe",nil];
-//                         alrt.tag = 5001;
-//                         [alrt show];
-//                     }
-//
-//                     else
-//                     {
-//                         UIAlertView *alrt = [[UIAlertView alloc]initWithTitle:@"" message:@"Incorrect email id or password." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-//                         [alrt show];
-//                     }
-//                 }
-//             }
-//                                             failure:^(AFHTTPRequestOperation *operation, NSError *error)
-//             {
-//             }];
-//            [operation start];
         }
     }
 }
@@ -336,12 +278,27 @@
 
 -(IBAction)btnSignInFBClicked:(id)sender
 {
-    [self loginWithFb];
+//    [self loginWithFb];
+    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"signupcustomerVC"];
+    [self.navigationController pushViewController:vc animated:YES];
 }
 
 -(IBAction)btnCancel
 {
     [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)ActionInfo:(id)sender {
+    viewInfo.frame = self.view.frame;
+    viewInfo.alpha = 0;
+    [self.view addSubview:viewInfo];
+    [UIView animateWithDuration:0.2 delay:0.2 options:UIViewAnimationOptionCurveEaseIn  animations:^
+     {
+         viewInfo.alpha = 1;
+     }
+                     completion:nil];
+    //UIViewAnimationOptionCurveLinear
+    [UIView commitAnimations];
 }
 
 #pragma mark TextFeild Delegate
@@ -364,6 +321,7 @@
 {
     [tfPassword resignFirstResponder];
     [tfEmail resignFirstResponder];
+    [viewInfo removeFromSuperview];
 }
 
 -(void)loginWithFb
@@ -380,9 +338,9 @@
         NSLog(@"Facebook user id %@",strUserId);
         FBSDKLoginManager *login = [[FBSDKLoginManager alloc] init];
         login.loginBehavior = FBSDKLoginBehaviorWeb;
-//        [login logOut];
+        [login logOut];
 
-        [login logInWithPublishPermissions:@[@"publish_actions"] fromViewController:self.view.window.rootViewController handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+        [login logInWithReadPermissions:@[@"public_profile", @"email"] fromViewController:self.view.window.rootViewController handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
 //        }];
 //        [login logInWithReadPermissions:@[@"email",@"public_profile",@"user_hometown",@"publish_action"] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
             if (error)
@@ -400,12 +358,7 @@
                     NSMutableDictionary* parameters = [NSMutableDictionary dictionary];
                     [parameters setValue:@"id,name,email,gender" forKey:@"fields"];
                     
-                    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters]
-                     
-                     //dp 19 Dec 2015
-                     
-                     startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error)
- {
+                    [[[FBSDKGraphRequest alloc] initWithGraphPath:@"me" parameters:parameters] startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
                          if (!error)
                          {
                              App_Delegate.dictUserInfoFB1 =[[NSMutableDictionary alloc]init];
@@ -423,6 +376,8 @@
                              [dict setObject:[App_Delegate.dictUserInfoFB1 valueForKey:@"fbId"]forKey:@"facebook_id"];
                              [dict setObject:name forKey:@"name"];
                              [dict setValue:[App_Delegate.dictUserInfoFB1 valueForKey:@"email"] forKey:@"email"];
+                             [dict setValue: App_Delegate.udid forKey:@"udid"];
+                             [dict setValue: @"IOS" forKey:@"platform"];
                              netUtills = [[NetworkUtills alloc] initWithSelector:@selector(ParseResponseRegister:) WithCallBackObject:self];
                              [netUtills GetResponseByASIFormDataRequest:[NSString stringWithFormat:@"%@%@",mainUrl,userRegister] WithDictionary:dict];
                          }
@@ -450,7 +405,7 @@
     NSString *sts =[dictRegister valueForKey:@"status"] ;
     if ([sts isEqualToString:@"200"])
     {
-        [self.navigationController popViewControllerAnimated:YES];
+        [self.navigationController popToRootViewControllerAnimated:YES];
     }
 }
 

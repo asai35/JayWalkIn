@@ -2,7 +2,7 @@
 //  TutorialVC.m
 //  Jwalkin
 //
-//  Created by Ridmal Choudhary on 22/12/15.
+//  Created by Asai on 22/12/15.
 //  Copyright (c) 2015 fox. All rights reserved.
 //
 
@@ -87,10 +87,12 @@
 
 - (IBAction)SkipAction:(id)sender {
     
-   HomeVC *skip = [[HomeVC alloc] initWithNibName:@"HomeVC" bundle:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
+//    UINavigationController *skip = [self.storyboard instantiateViewControllerWithIdentifier:@"homeNav"];//[[HomeVC alloc] initWithNibName:@"HomeVC" bundle:nil];
+////    [self dismissViewControllerAnimated:YES completion:nil];
+//
+//    [self presentViewController:skip animated:YES completion:nil];
 
-    [self.navigationController pushViewController:skip animated:YES];
-    
+    UIViewController *home = [self.storyboard instantiateViewControllerWithIdentifier:@"mainVC"];
+    [self.navigationController pushViewController:home animated:YES];
 }
 @end
